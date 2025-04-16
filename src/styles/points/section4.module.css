@@ -1,0 +1,556 @@
+.main {
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container {
+    width:85%;
+    height:55%;
+    display:flex;
+}
+
+.left {
+    width:48%;
+    height:100%;
+    background:url('/bg.png');
+    background-size:cover;
+    background-position:center;
+}
+
+.right {
+    position:relative;
+    z-index:999;
+    width:52%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:flex-end;
+}
+
+.p {
+    color:#fefefe;
+    font-weight:300;
+    letter-spacing:1.2px;
+    text-align:right;
+}
+
+.teal {
+    color:#57E3E1;
+    font-weight:500;
+}
+
+.medium {
+    width:100%;
+    font-size:28px;
+    font-weight:600;
+    letter-spacing:1.25px;
+    color:#ffff;
+    margin:12px;
+    text-align:right;
+}
+
+.bg {
+    width:184px;
+    margin-left:calc(100% - 178px);
+    background:linear-gradient(90deg, #BA0E42, #54D6D5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-align:right;
+}
+
+.text {
+    font-size:48px;
+    font-weight:700;
+    text-align:right;
+}
+
+.form_wrapper {
+    width:345px;
+    z-index:1001;
+    transition:all 0.5s ease-in-out;
+    margin-top:34px;
+}
+
+.label {
+    float:right;
+    font-size:18px;
+    color:#fefefe;
+    font-weight:300;
+    background-color:#1B1B1B;
+}
+
+.input {
+    width:100%;
+    height:38px;
+    border-radius:6px;
+    margin-top:8px;
+    font-size:16px;
+    font-weight:300;
+    padding-left:16px;
+    background-color:transparent;
+    border:0.27px solid #fefefe;
+    color:#fefefe;
+}
+
+.button {
+    padding:12px 18px;
+    background-color:#BA0E42;
+    color:#ffff;
+    font-weight:400;
+    letter-spacing:1.2px;
+    font-size:14px;
+    font-weight:500;
+    border-radius:8px;
+    float:right;
+    margin-top:34px;
+}
+
+.form1 .p {
+    transform:translateX(12px);
+}
+
+.txt {
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#ffffffe8;
+}
+
+.span {
+    color:#d31c53;
+    font-size:54px;
+}
+
+.points {
+    font-size:74px;
+    width:64px;
+    margin-left:calc(100% - 64px);
+}
+
+.display {
+    margin-top:28px;
+}
+
+.overlay {
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    z-index:9999;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background-color:#101010ba;
+    flex-direction:column;
+    backdrop-filter:blur(3px);
+}
+
+.close {
+    width:30px;
+    height:30px;
+    object-fit:cover;
+    object-position:center;
+    position:absolute;
+    top:20px;
+    right:20px;
+    cursor:pointer;
+}
+
+.certificate {
+    width: 208mm; /* A4 width */
+    height: 150mm; /* A4 height */
+    position: relative;
+    margin-top: 0px;
+    background: url("/certificate.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    object-fit: cover;
+  }
+  
+  .content {
+    text-align: center;
+    padding: 20mm;
+    color: #000;
+  }
+  
+  .username{
+    font-size: 28px;
+    margin-top: 180px;
+    margin-left: -4px;
+    font-size: 50px;
+    margin-bottom: 0px;
+    color: #F0C145;
+  }
+  
+  .para{
+    font-weight: 500;
+    width: 450px;
+    text-align: center;
+    line-height: 17px;
+    margin-left: 94px;
+    margin-top: 20px;
+    font-size: 12px;
+    color: #fff;
+  }
+  
+  .downloadButton {
+    margin-top: 20px;
+    padding: 16px 20px;
+    background-color: #BA0E42;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size:16px;
+  }
+  
+  .downloadButton:hover {
+    background-color: #d31c53;
+  }
+
+@media only screen and (min-width: 600px) and (max-width: 1300px) {
+
+    .input {
+        width:90%;
+        float:right;
+    }
+
+    .left {
+        height:74%;
+    }
+
+    .certificate {
+        object-fit:contain;
+        object-position:center;
+    }
+
+} 
+
+@media only screen and (max-width: 601px) {
+
+    .form1 {
+        margin-top:34px;
+    }
+
+    .container {
+        margin-top:54px;
+        flex-direction:column;
+        height:auto;
+    }
+
+    .left {
+        width:345px;
+        height:300px;
+    }
+
+    .medium {
+        width:100%;
+    }
+
+    .right {
+        width:100%;
+    }
+
+    .input {
+        width:94%;
+        float:right;
+    }
+
+    .overlay {
+        width:100%;
+        height:calc(100%);
+        padding:74px 12px 24px 12px;
+    }
+
+    .certificate {
+        width:100%;
+        height:385px;
+        background-size:contain;
+        box-shadow:none;
+    }
+
+    .content {
+        padding:0px;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        padding-top:170px;
+    }
+
+    .username {
+        font-size:30px;
+        margin-top:0;
+        margin-left:0px;
+    }
+
+    .background {
+        object-fit:contain;
+    }
+
+    .para {
+        width:86%;
+        line-height:14px;
+        font-weight:400;
+        margin-left:0px;
+        font-size: 8px;
+        margin-top:12px;
+    }
+
+    .downloadButton {
+        margin-top:0px;
+    }
+
+}
+
+@media print {
+
+    .main {
+        width:100%;
+        height:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+    
+    .container {
+        width:85%;
+        height:55%;
+        display:flex;
+    }
+    
+    .left {
+        width:48%;
+        height:100%;
+        background:url('/bg.png');
+        background-size:cover;
+        background-position:center;
+    }
+    
+    .right {
+        position:relative;
+        z-index:999;
+        width:52%;
+        height:100%;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:flex-end;
+    }
+    
+    .p {
+        color:#fefefe;
+        font-weight:300;
+        letter-spacing:1.2px;
+        text-align:right;
+    }
+    
+    .teal {
+        color:#57E3E1;
+        font-weight:500;
+    }
+    
+    .medium {
+        width:100%;
+        font-size:28px;
+        font-weight:600;
+        letter-spacing:1.25px;
+        color:#ffff;
+        margin:12px;
+        text-align:right;
+    }
+    
+    .bg {
+        width:184px;
+        margin-left:calc(100% - 178px);
+        background:linear-gradient(90deg, #BA0E42, #54D6D5);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-align:right;
+    }
+    
+    .text {
+        font-size:48px;
+        font-weight:700;
+        text-align:right;
+    }
+    
+    .form_wrapper {
+        width:345px;
+        z-index:1001;
+        transition:all 0.5s ease-in-out;
+        margin-top:34px;
+    }
+    
+    .label {
+        float:right;
+        font-size:18px;
+        color:#fefefe;
+        font-weight:300;
+        background-color:#1B1B1B;
+    }
+    
+    .input {
+        width:100%;
+        height:38px;
+        border-radius:6px;
+        margin-top:8px;
+        font-size:16px;
+        font-weight:300;
+        padding-left:16px;
+        background-color:transparent;
+        border:0.27px solid #fefefe;
+        color:#fefefe;
+    }
+    
+    .button {
+        padding:12px 18px;
+        background-color:#BA0E42;
+        color:#ffff;
+        font-weight:400;
+        letter-spacing:1.2px;
+        font-size:14px;
+        font-weight:500;
+        border-radius:8px;
+        float:right;
+        margin-top:34px;
+    }
+    
+    .form1 .p {
+        transform:translateX(12px);
+    }
+    
+    .txt {
+        width:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        color:#ffffffe8;
+    }
+    
+    .span {
+        color:#d31c53;
+        font-size:54px;
+    }
+    
+    .points {
+        font-size:74px;
+        width:64px;
+        margin-left:calc(100% - 64px);
+    }
+    
+    .display {
+        margin-top:28px;
+    }
+    
+    .overlay {
+        width:100%;
+        height:100%;
+        position:absolute;
+        top:50%;
+        left:50%;
+        transform:translate(-50%, -50%);
+        z-index:9999;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background-color:#101010ba;
+        flex-direction:column;
+        backdrop-filter:blur(3px);
+    }
+    
+    .close {
+        width:30px;
+        height:30px;
+        object-fit:cover;
+        object-position:center;
+        position:absolute;
+        top:20px;
+        right:20px;
+        cursor:pointer;
+    }
+    
+    .certificate {
+        width: 208mm; /* A4 width */
+        height: 150mm; /* A4 height */
+        position: relative;
+        margin-top: 0px;
+        background: url("/certificate.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .background {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        object-fit: cover;
+      }
+      
+      .content {
+        text-align: center;
+        padding: 20mm;
+        color: #000;
+      }
+      
+      .username{
+        font-size: 28px;
+        margin-top: 180px;
+        margin-left: -4px;
+        font-size: 50px;
+        margin-bottom: 0px;
+        color: #F0C145;
+      }
+      
+      .para{
+        font-weight: 500;
+        width: 450px;
+        text-align: center;
+        line-height: 17px;
+        margin-left: 94px;
+        margin-top: 20px;
+        font-size: 12px;
+        color: #fff;
+      }
+      
+      .downloadButton {
+        margin-top: 20px;
+        padding: 16px 20px;
+        background-color: #BA0E42;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size:16px;
+      }
+      
+      .downloadButton:hover {
+        background-color: #d31c53;
+      }
+
+}

@@ -1,0 +1,84 @@
+.main {
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+    background-color:#1B1B1B;
+    position:relative;
+}
+
+.bar {
+    position:absolute;
+    z-index:999;
+    width:50px;
+    height:280px;
+}
+
+.left {
+    top:0;
+    left:0;
+    background:url('/left.png');
+    background-position:center;
+    background-size:contain;
+    background-repeat:no-repeat;
+}
+
+.option {
+    font-size:16px;
+    color:#ffff;
+    font-weight:300;
+}
+
+.console {
+    position:absolute;
+    bottom:0;
+    right:0;
+    width:493px;
+    height:306px;
+    object-fit:cover;
+    object-position:center;
+}
+
+.cross {
+    height:44px;
+    position:absolute;
+    top:38px;
+    right:36%;
+}
+
+.bottom {
+    top:87%;
+    left:39%;
+}
+
+@media only screen and (max-width: 601px) {
+
+    .main {
+        min-height:100vh;
+        height:auto;
+        overflow-y:scroll;
+        padding-bottom:38px;
+    }
+
+    .bar {
+        width:44px;
+        height:204px;
+    }
+
+    .console {
+        display:none;
+    }
+
+    .top {
+        top:104px;
+        left:64px;
+    }
+
+    .mob_bottom {
+        display:none;
+    }
+
+    .bottom {
+        display:none;
+    }
+
+}
