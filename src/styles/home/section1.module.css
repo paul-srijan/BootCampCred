@@ -300,7 +300,7 @@
     .form_wrapper {
         position:relative;
         margin:54px 0px;
-        left:0;
+        left:-16px;
     }
 
     .form_wrapper_mob {

@@ -62,6 +62,7 @@ export default function Section1() {
           
           setTimeout(() => {
             setLoading2(false);
+            setFormData1(initialFormData1);
             router.push('/');
           }, 3000);
 
