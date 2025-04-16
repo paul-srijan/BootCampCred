@@ -62,9 +62,9 @@ export default function Section1() {
           
           setTimeout(() => {
             setLoading2(false);
+            router.push('/');
           }, 3000);
 
-          router.push('/');
         } else {
           const res = await response.json();
           setError(res);
@@ -120,7 +120,8 @@ export default function Section1() {
           setTimeout(() => {
             setLoad2(false);
             router.push('/');
-          }, 5000);
+          }, 3000);
+
         } else {
           console.error('Failed to submit entry:', response.status, response.statusText);
           setLoad2(false);
