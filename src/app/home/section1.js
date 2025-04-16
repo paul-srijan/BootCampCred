@@ -61,10 +61,10 @@ export default function Section1() {
           
           setTimeout(() => {
             setLoading2(false);
+            setFormData1(initialFormData1);
+            window.location.reload();
           }, 3000);
 
-          setFormData1(initialFormData1);
-          window.location.reload();
         } else {
           const res = await response.json();
           setError(res);
