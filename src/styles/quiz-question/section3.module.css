@@ -1,0 +1,27 @@
+.main {
+    position:absolute;
+    top:0;
+    left:0;
+}
+
+.h1 {
+    font-size:64px;
+    font-weight:700;
+    color:#70707016;
+    letter-spacing:4px;
+}
+
+@media only screen and (max-width: 600px) {
+
+    .main {
+        right:0;
+        bottom:5%;
+        z-index:0;
+    }
+
+    .h1 {
+        font-size:54px;
+        letter-spacing:1.5px;
+    }
+
+}
