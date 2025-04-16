@@ -133,10 +133,14 @@
 .form_wrapper {
     position:absolute;
     top:7%;
-    right:114px;
+    right:154px;
     width:345px;
     z-index:1001;
     transition:all 1s ease-in-out;
+}
+
+.codecombat {
+    margin-top:7%;
 }
 
 .label {
@@ -221,7 +225,7 @@
     height:180px;
     object-fit:cover;
     object-position:center;
-    margin-left:6%;
+    transform:translate(50%, 100%);
 }
 
 .select {
@@ -235,9 +239,9 @@
 }
 
 .tick {
-    width:300px;
-    height:300px;
-    margin-left:-64px;
+    width:240px;
+    height:240px;
+    margin-left:-54px;
 }
 
 .p {
@@ -293,22 +297,10 @@
         width:94%;
     }
 
-    .wrapper {
-        z-index:999;
-    }
-
     .form_wrapper {
         position:relative;
         margin:54px 0px;
-        left:-16px;
-    }
-
-    .form_wrapper_mob {
-        height:280px;
-        padding-right:34px;
-        padding-top:38px;
-        padding-bottom:38px;
-        margin-left:-8%;
+        left:-8px;
     }
 
     .label {
@@ -323,13 +315,8 @@
     }
 
     .wrapper {
-        margin-left:-12px;
-    }
-
-    .form_wrapper_mob .p {
-        width:85%;
-        text-align:left;
-        margin-left:64px;
+        z-index:999;
+        margin-left:0px;
     }
 
     .button {
@@ -337,17 +324,14 @@
         margin-right:-36px;
     }
 
+    .gif {
+        transform:translate(50%, 0%);
+    }
+
     .tick {
         margin-left:0px;
         position:relative;
         z-index:9999;
-        left:50%;
-        transform:translateX(-50%);
-    }
-
-    .gif {
-        margin-top:300px;
-        margin-left:89.5px;
     }
 
 }

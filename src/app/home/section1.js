@@ -58,14 +58,13 @@ export default function Section1() {
           console.log('Entry submitted successfully!');
           setLoading(false);
           setLoading2(true);
-          setFormData1(initialFormData1);
           
           setTimeout(() => {
             setLoading2(false);
-            setFormData1(initialFormData1);
-            router.push('/');
           }, 3000);
 
+          setFormData1(initialFormData1);
+          window.location.reload();
         } else {
           const res = await response.json();
           setError(res);
@@ -116,13 +115,13 @@ export default function Section1() {
           console.log('Entry submitted successfully!');
           setLoad(false);
           setLoad2(true);
-          setFormData2(initialFormData2);
           
           setTimeout(() => {
             setLoad2(false);
-            router.push('/');
           }, 3000);
 
+          setFormData2(initialFormData2);
+          window.location.reload();
         } else {
           console.error('Failed to submit entry:', response.status, response.statusText);
           setLoad2(false);
@@ -170,10 +169,10 @@ export default function Section1() {
             </div>
             <div className={styles.wrapper}>
                 <div className={styles.left_content}>
-                    <a href="#bootcamp"><button className={styles.btn} onClick={() => display()}>BOOTCAMP</button></a>
+                    <button className={styles.btn} onClick={() => display()}>BOOTCAMP</button>
                     <div className={styles.para}>Rise to the <span className={styles.bg}><span className={styles.text}>challenge!</span></span> Tackle obstacles, push your boundaries, and emerge <span className={styles.bg}><span className={styles.text}>victorious</span></span> as a leader in the <span className={styles.bg}><span className={styles.text}>Tech</span></span> arena.</div>
                     <br/><br/>
-                    <a href="#codecombat"><button className={styles.btn} onClick={() => Show()}>CODECOMBAT</button></a>
+                    <button className={styles.btn} onClick={() => Show()}>CODECOMBAT</button>
                     <div className={styles.para}>Step into the arena! Showcase your <span className={styles.bg}><span className={styles.text}>skills</span></span>, outthink the competition, and claim your title as the ultimate <span className={styles.bg}><span className={styles.text}>challenge!</span></span>.</div>
                 </div>
                 <img src="/circle.png" alt="404" className={styles.image} />
@@ -222,7 +221,7 @@ export default function Section1() {
           ) }
         </div>
 
-        <div className={styles.form_wrapper} style={{ transform: `translateX(${codeCombat})` }}>
+        <div className={`${styles.form_wrapper} ${styles.codecombat}`} style={{ transform: `translateX(${codeCombat})` }}>
           { load == true ? (
             <img className={styles.gif} src="/loading.gif" alt="gif" />
           ) : (
