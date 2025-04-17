@@ -58,11 +58,12 @@ export default function Section1() {
           console.log('Entry submitted successfully!');
           setLoading(false);
           setLoading2(true);
+          setFormData1(initialFormData1);
           
           setTimeout(() => {
             setLoading2(false);
-            setFormData1(initialFormData1);
-            window.location.reload();
+            setBootcamp('200%');
+            router.push('/');
           }, 3000);
 
         } else {

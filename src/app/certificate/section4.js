@@ -62,8 +62,10 @@ export default function Section4() {
                 setResult(result);
                 setShow('flex');
             } else {
+                const result = await response.json();
                 setResult(result);
-                console.error('Failed to submit entry:', result.error);
+                console.log('Failed to submit entry:', result.error);
+                setShow('flex');
             }
         } catch(error) {
             console.log("an error occured : " + error);
@@ -75,24 +77,30 @@ export default function Section4() {
 
             <div className={styles.overlay} style={{ display: `${show}` }}>
             <img src="/close.png" className={styles.close} alt="404" onClick={() => setShow('none')} />
-            <div ref={componentRef} className={styles.certificate}>
-            <img
-                src="./certificate.png"
-                alt="Certificate Background"
-                className={styles.background}
-            />
-            <div className={styles.content}>
-            <h2 className={styles.username}>{result.name && result.name}</h2>
-            <p className={styles.para}>{result.message && result.message}</p>
-            </div>
-            </div>
+            {result?.error ? (
+                <p className={styles.error}>This Certificate ID is not verified!</p>
+                ) : result?.name && result?.message ? (
+                    <>
+                    <div ref={componentRef} className={styles.certificate}>
+                        <img
+                            src="./certificate.png"
+                            alt="Certificate Background"
+                            className={styles.background}
+                        />
+                        <div className={styles.content}>
+                            <h2 className={styles.username}>{result.name}</h2>
+                            <p className={styles.para}>{result.message}</p>
+                        </div>
+                    </div>
+                        <button
+                        className={styles.downloadButton}
+                        onClick={ mobile == true ? handleMobilePrint : handlePrint }
+                        >
+                            Download PDF
+                        </button>
+                    </>
+                ) : null}
 
-            <button
-            className={styles.downloadButton}
-            onClick={ mobile == true ? handleMobilePrint : handlePrint }
-            >
-                Download PDF
-            </button>
                 </div>
 
                 <div className={styles.container}>
