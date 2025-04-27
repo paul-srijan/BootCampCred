@@ -43,7 +43,12 @@ export default function Section2() {
 
         if(response.ok) {
             sessionStorage.setItem("userData", JSON.stringify(result));
-            // router.push('/quiz');
+
+            if(result.role == "student") {
+              router.push('/certificate');
+            } else if(result.role == "admin") {
+              router.push('/admin/bootcamp');
+            }
         } else {
             setError(result);
             setAlert('grid');

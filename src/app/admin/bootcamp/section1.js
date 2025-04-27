@@ -10,16 +10,16 @@ export default function Section1() {
     const router = useRouter();
     const [parsedData, setParsedData] = useState({});
 
-    // useEffect(() => {
-    //     const userData = sessionStorage.getItem("userData");
+    useEffect(() => {
+        const userData = sessionStorage.getItem("userData");
 
-    //     if(userData && userData.role == 'admin') {
-    //         const data = JSON.parse(userData);
-    //         setParsedData(data);
-    //     } else {
-    //         router.push('/');
-    //     }
-    // }, []);
+        if(userData && userData.role == 'admin') {
+            const data = JSON.parse(userData);
+            setParsedData(data);
+        } else {
+            router.push('/');
+        }
+    }, []);
 
     return (
         <main className={styles.main}>

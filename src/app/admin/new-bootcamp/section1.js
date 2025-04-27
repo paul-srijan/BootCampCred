@@ -11,14 +11,14 @@ export default function Section1() {
     const [parsedData, setParsedData] = useState({});
 
     useEffect(() => {
-        // const userData = sessionStorage.getItem("userData");
+        const userData = sessionStorage.getItem("userData");
 
-        // if(userData && userData.role == 'admin') {
-        //     const data = JSON.parse(userData);
-        //     setParsedData(data);
-        // } else {
-        //     router.push('/');
-        // }
+        if(userData && userData.role == 'admin') {
+            const data = JSON.parse(userData);
+            setParsedData(data);
+        } else {
+            router.push('/');
+        }
     }, []);
 
     return (
