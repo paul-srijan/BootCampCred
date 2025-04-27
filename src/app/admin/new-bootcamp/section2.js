@@ -21,11 +21,16 @@ export default function Section2() {
         };
     }, []);
 
+    const logout = () => {
+        sessionStorage.removeItem("userData");
+        router.push('/');
+    };
+
     return (
         <main className={styles.main}>
             <h1 className={styles.h1}>Admin<span className={styles.span}>Console</span></h1>
             { !mobile && (
-                <button className={styles.logout}>Logout</button>
+                <button className={styles.logout} onClick={logout}>Logout</button>
             ) }
             <img src="/hamburger.png" alt="404" className={styles.menu} onClick={() => setTranslate('0%')} />
             <div className={styles.panel} style={{ transform: `translateX(${translate})` }}>
@@ -35,7 +40,7 @@ export default function Section2() {
                     <a href="/admin/bootcamp"><li className={`${styles.li}`}><img src="/event-icon.png" alt="404" className={styles.icon} /> <p className={styles.text}>Bootcamps</p></li></a>
                     <a href="/admin/new-bootcamp"><li className={`${styles.li} ${styles.active}`}><img src="/add.png" alt="404" className={styles.icon} /> <p className={styles.text}>New Bootcamp</p></li></a>
                     <a href="/admin/new-question"><li className={`${styles.li}`}><img src="/quiz.png" alt="404" className={styles.icon} /> <p className={styles.text}>New Question</p></li></a>
-                    <button className={styles.logout}>Logout</button>
+                    <button className={styles.logout} onClick={logout}>Logout</button>
                 </ul>
             </div>
         </main>
