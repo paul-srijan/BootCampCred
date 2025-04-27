@@ -2,8 +2,10 @@
 
 import styles from "../../../styles/admin/bootcamp/section2.module.css";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Section2() {
+    const router = useRouter();
     const [mobile, setMobile] = useState(false);
     const [translate, setTranslate] = useState('-100%');
 
