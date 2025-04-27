@@ -12,10 +12,14 @@ export default function Section1() {
     
     useEffect(() => {
         const userData = sessionStorage.getItem("userData");
-    
-        if(userData && userData.role == 'admin') {
+
+        if (userData) {
             const data = JSON.parse(userData);
-            setParsedData(data);
+            if (data.role === 'admin') {
+                setParsedData(data);
+            } else {
+                router.push('/');
+            }
         } else {
             router.push('/');
         }
