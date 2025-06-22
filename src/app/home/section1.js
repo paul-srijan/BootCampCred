@@ -4,7 +4,7 @@ require('dotenv').config();
 import styles from "../../styles/home/section1.module.css";
 import Section2 from "./section2.js";
 import Section3 from "./section3.js";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Section1() {
@@ -19,6 +19,18 @@ export default function Section1() {
     const [loading2, setLoading2] = useState(false);
     const [load, setLoad] = useState(false);
     const [load2, setLoad2] = useState(false);
+    const [visible, setVisible] = useState('close');
+    const [type, setType] = useState('password');
+
+    function toggleVisiblity() {
+      if(visible == 'close') {
+        setVisible('open');
+        setType('text');
+      } else if(visible == 'open') {
+        setVisible('close');
+        setType('password');
+      }
+    }
 
     const initialFormData1 = {
       action: 'register',
@@ -55,7 +67,6 @@ export default function Section1() {
         });
   
         if (response.ok) {
-          console.log('Entry submitted successfully!');
           setLoading(false);
           setLoading2(true);
           setFormData1(initialFormData1);
@@ -65,6 +76,9 @@ export default function Section1() {
             setBootcamp('200%');
             router.push('/');
           }, 3000);
+
+          setError('you have successfully registered!');
+          setShow('flex');
 
         } else {
           const res = await response.json();
@@ -82,6 +96,7 @@ export default function Section1() {
     const initialFormData2 = {
       action: 'register',
       id: 0,
+      full_name: '',
       email: '',
       number: '',
       language: 'C',
@@ -100,7 +115,7 @@ export default function Section1() {
 
       e.preventDefault();
 
-      if(formData2.email == '' || formData2.number == '' || formData2.language == '' || formData2.password == '') {
+      if(formData2.email == '' || formData2.number == '' || formData2.full_name == '' || formData2.language == '' || formData2.password == '') {
         setLoad(false);
         setError('All fields are required!');
         setShow('flex');
@@ -108,28 +123,33 @@ export default function Section1() {
       }
   
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/post?action=register&id=0&email=${formData2.email}&number=${formData2.number}&language=${formData2.language}&password=${formData2.password}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/post?action=register&id=0&email=${formData2.email}&number=${formData2.number}&name=${formData2.full_name}&language=${formData2.language}&password=${formData2.password}`, {
           method: 'POST',
         });
   
         if (response.ok) {
-          console.log('Entry submitted successfully!');
           setLoad(false);
           setLoad2(true);
+          setFormData2(initialFormData2);
           
           setTimeout(() => {
             setLoad2(false);
+            setCodeCombat('200%');
+            router.push('/');
           }, 3000);
 
-          setFormData2(initialFormData2);
-          window.location.reload();
+          setError('you have successfully registered!');
+          setShow('flex');
+
         } else {
-          console.error('Failed to submit entry:', response.status, response.statusText);
-          setLoad2(false);
+          const res = await response.json();
+          setError(res);
+          setShow('flex');
+          setLoad(false);
         }
       } catch (error) {
         console.error('Error submitting entry:', error);
-        setLoad2(false);
+        setLoad(false);
       }
     };
 
@@ -183,10 +203,10 @@ export default function Section1() {
         <div className={styles.forms_container}>
         <div className={styles.form_wrapper} style={{ transform: `translateX(${bootcamp})` }}>
           { loading == true ? (
-            <img className={styles.gif} src="/loading.gif" alt="gif" />
+            <img className={styles.gif} src="/red-loader.gif" alt="gif" />
           ) : (
           loading2 == true ? (
-            <img className={`${styles.gif} ${styles.tick}`} src="/tick.gif" alt="gif" />
+            <img className={`${styles.gif} ${styles.tick}`} src="/checkmark-unscreen.gif" alt="gif" />
           ) : (
             showForm == 'bootcamp' && (
             <>
@@ -201,19 +221,33 @@ export default function Section1() {
               <br/><br/>
               <label className={styles.label}>Programming <span className={styles.teal} style={{ fontWeight: '500' }}>Language</span></label><br/>
               <select type="text" className={`${styles.input} ${styles.select}`} name="language" value={formData1.language} onChange={handleChange1}>
-                 <option value="C" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>C</option>
-                 <option value="C++" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>C++</option>
-                 <option value="Java" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Java</option>
-                 <option value="Python" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Python</option>
-                 <option value="DSA using C" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>DSA using C</option>
-                 <option value="DSA using C++" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>DSA using C++</option>
-              </select><br/><br/>
+          <option value="C" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>C</option>
+          <option value="C++" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>C++</option>
+          <option value="DSA with C" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>DSA using C</option>
+          <option value="DSA with C++" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>DSA using C++</option>
+          <option value="Java" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Java</option>
+          <option value="Python" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Python</option>              
+          <option value="AI and ML" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>AI & ML</option>
+          <option value="Full Stack" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Full Stack</option>
+          <option value="MERN Stack" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>MERN Stack</option>
+          <option value="Android Dev" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Android Dev</option>
+          <option value="Web and AI" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Web & AI</option>
+          <option value="Django" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Django</option>
+          <option value="Generative AI" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Generative AI</option>
+          <option value="AI Agents" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>AI Agents</option>
+          <option value="Cloud Development" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Cloud Development</option>
+          </select><br/><br/>
               <label className={styles.label}>Your <span className={styles.teal} style={{ fontWeight: '500' }}>Email</span></label><br/>
               <input type="email" name="email" className={styles.input} value={formData1.email} onChange={handleChange1} /><br/><br/>
               <label className={styles.label}>Mobile <span className={styles.teal} style={{ fontWeight: '500' }}>Number</span></label><br/>
               <input type="number" name="number" className={styles.input} value={formData1.number} onChange={handleChange1} /><br/><br/>
               <label className={styles.label}>Enter <span className={styles.teal} style={{ fontWeight: '500' }}>Password</span></label><br/>
-              <input type="password" name="password" className={styles.input} value={formData1.password} onChange={handleChange1} />
+              {/* <input type="password" name="password" className={styles.input} value={formData1.password} onChange={handleChange1} /> */}
+              <div className={styles.password_div}>
+              <input type={type} name="password" className={styles.input} value={formData1.password} onChange={handleChange1} />
+              <img src="/close-eye.png" style={{ display: visible == 'close' ? "block" : "none" }} className={`${styles.icon} ${styles.close_eye}`} onClick={toggleVisiblity} />
+              <img style={{ display: visible == 'open' ? "block" : "none" }} src="/open-eye.png" className={`${styles.icon} ${styles.open_eye}`} onClick={toggleVisiblity} />
+              </div>
               <button className={styles.button} onClick={handleSubmit1}>JOIN NOW</button>
             </form>
             </>
@@ -224,31 +258,47 @@ export default function Section1() {
 
         <div className={`${styles.form_wrapper} ${styles.codecombat}`} style={{ transform: `translateX(${codeCombat})` }}>
           { load == true ? (
-            <img className={styles.gif} src="/loading.gif" alt="gif" />
+            <img className={styles.gif} src="/red-loader.gif" alt="gif" />
           ) : (
             load2 == true ? (
-              <img className={`${styles.gif} ${styles.tick}`} src="/tick.gif" alt="gif" />
+              <img className={`${styles.gif} ${styles.tick}`} src="/checkmark-unscreen.gif" alt="gif" />
             ) : ( showForm == 'codeCombat' && (
           <>
           <p className={styles.p} style={{ color: '#ffff', fontWeight: '300', letterSpacing: '1px' }}>REGISTER AND JOIN OUR <br/> <span style={{ fontSize: '24px' }} className={`${styles.teal} ${styles.bold}`}>Code-Combat</span></p>
           <br/><br/>
           <form className={styles.form} method="POST">
-            <label className={styles.label}>Programming <span className={styles.teal} style={{ fontWeight: '500' }}>Language</span></label><br/>
-            <select type="text" className={`${styles.input} ${styles.select}`} name="language" value={formData2.language} onChange={handleChange2}>
-               <option value="C" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>C</option>
-               <option value="C++" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>C++</option>
-               <option value="Java" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Java</option>
-               <option value="Python" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Python</option>
-               <option value="DSA using C" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>DSA using C</option>
-               <option value="DSA using C++" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>DSA using C++</option>
-             </select>
-            <br/><br/>
+          <label className={styles.label}>Full <span className={styles.teal} style={{ fontWeight: '500' }}>Name</span></label><br/>
+          <input type="text" name="full_name" className={styles.input} value={formData2.full_name} onChange={handleChange2} />
+          <br/><br/>
+          <label className={styles.label}>Programming <span className={styles.teal} style={{ fontWeight: '500' }}>Language</span></label><br/>
+              <select type="text" className={`${styles.input} ${styles.select}`} name="language" value={formData2.language} onChange={handleChange2}>
+              <option value="C" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>C</option>
+          <option value="C++" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>C++</option>
+          <option value="DSA with C" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>DSA using C</option>
+          <option value="DSA with C++" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>DSA using C++</option>
+          <option value="Java" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Java</option>
+          <option value="Python" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Python</option>              
+          <option value="AI and ML" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>AI & ML</option>
+          <option value="Full Stack" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Full Stack</option>
+          <option value="MERN Stack" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>MERN Stack</option>
+          <option value="Android Dev" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Android Dev</option>
+          <option value="Web and AI" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Web & AI</option>
+          <option value="Django" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Django</option>
+          <option value="Generative AI" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Generative AI</option>
+          <option value="AI Agents" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>AI Agents</option>
+          <option value="Cloud Development" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Cloud Development</option>
+          </select><br/><br/>
             <label className={styles.label}>Your <span className={styles.teal} style={{ fontWeight: '500' }}>Email</span></label><br/>
             <input type="email" name="email" className={styles.input} value={formData2.email} onChange={handleChange2} /><br/><br/>
             <label className={styles.label}>Mobile <span className={styles.teal} style={{ fontWeight: '500' }}>Number</span></label><br/>
             <input type="number" name="number" className={styles.input} value={formData2.number} onChange={handleChange2} /><br/><br/>
             <label className={styles.label}>Enter <span className={styles.teal} style={{ fontWeight: '500' }}>Password</span></label><br/>
-            <input type="password" name="password" className={styles.input} value={formData2.password} onChange={handleChange2} /><br/><br/>
+            {/* <input type="password" name="password" className={styles.input} value={formData2.password} onChange={handleChange2} /><br/><br/> */}
+            <div className={styles.password_div}>
+              <input type={type} name="password" className={styles.input} value={formData2.password} onChange={handleChange2} />
+              <img src="/close-eye.png" style={{ display: visible == 'close' ? "block" : "none" }} className={`${styles.icon} ${styles.close_eye}`} onClick={toggleVisiblity} />
+              <img style={{ display: visible == 'open' ? "block" : "none" }} src="/open-eye.png" className={`${styles.icon} ${styles.open_eye}`} onClick={toggleVisiblity} />
+              </div>
             <button className={styles.button} onClick={handleSubmit2}>JOIN NOW</button>
           </form>
           </>
@@ -263,7 +313,7 @@ export default function Section1() {
 
         <div className={styles.popup} style={{ display: `${show}`, paddingBottom: '20px' }}>
           <img src="/close.png" className={styles.close} onClick={close} />
-          <p className={styles.error_mssg} style={{ color: '#F08080', fontSize: '20px', marginBottom: '16px', fontWeight: '300', letterSpacing: '1px', marginTop: '14px' }}>{ error !== '' ? error : '' }</p>
+          <p className={styles.error_mssg} style={{ color: error == 'you have successfully registered!' ? '#7CFC00' : '#F08080', fontSize: '20px', marginBottom: '16px', fontWeight: '300', letterSpacing: '1px', marginTop: '14px' }}>{ error !== '' ? (error == 'you have successfully registered!' ? 'you have successfully registered!' : error) : '' }</p>
         </div>
 
         </main>

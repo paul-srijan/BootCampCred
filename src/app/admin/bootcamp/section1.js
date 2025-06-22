@@ -1,5 +1,4 @@
-'use client';
-
+"use client";
 import styles from "../../../styles/admin/bootcamp/section1.module.css";
 import Section2 from "./section2";
 import Section3 from "./section3";
@@ -9,7 +8,6 @@ import { useState, useEffect } from "react";
 export default function Section1() {
     const router = useRouter();
     const [parsedData, setParsedData] = useState({});
-
 
     useEffect(() => {
         const userData = sessionStorage.getItem("userData");

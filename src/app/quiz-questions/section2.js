@@ -1,6 +1,12 @@
 import styles from "../../styles/quiz-question/section2.module.css";
 
 export default function Section2() {
+
+    const logout = () => {
+        sessionStorage.removeItem("userData");
+        router.push('/');
+    };
+
     return (
         <main className={styles.main}>
             <div className={styles.text_wrap}>

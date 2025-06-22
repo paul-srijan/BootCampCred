@@ -13,11 +13,23 @@ export default function Section2() {
     const [show, setShow] = useState('none');
     const [error, setError] = useState('');
     const [alert, setAlert] = useState('none');
+    const [visible, setVisible] = useState('close');
+    const [type, setType] = useState('password');
 
     const initialFormData3 = {
         action: 'login',
         number: '',
         password: ''
+    }
+
+    function toggleVisiblity() {
+      if(visible == 'close') {
+        setVisible('open');
+        setType('text');
+      } else if(visible == 'open') {
+        setVisible('close');
+        setType('password');
+      }
     }
 
     const [formData3, setFormData3] = useState(initialFormData3);
@@ -45,7 +57,7 @@ export default function Section2() {
             sessionStorage.setItem("userData", JSON.stringify(result));
 
             if(result.role == "student") {
-              router.push('/certificate');
+              router.push('/dashboard');
             } else if(result.role == "admin") {
               router.push('/admin/bootcamp');
             }
@@ -86,7 +98,11 @@ export default function Section2() {
             <label className={styles.label}>Mobile <span className={styles.teal} style={{ fontWeight: '500' }}>Number</span></label><br/>
             <input type="number" name="number" className={styles.input} value={formData3.number} onChange={handleChange3} /><br/><br/>
             <label className={styles.label}>Enter <span className={styles.teal} style={{ fontWeight: '500' }}>Password</span></label><br/>
-            <input type="password" name="password" className={styles.input} value={formData3.password} onChange={handleChange3} />
+            <div className={styles.password_div}>
+            <input type={type} name="password" className={styles.input} value={formData3.password} onChange={handleChange3} />
+            <img src="/close-eye.png" style={{ display: visible == 'close' ? "block" : "none" }} className={`${styles.icon} ${styles.close_eye}`} onClick={toggleVisiblity} />
+            <img style={{ display: visible == 'open' ? "block" : "none" }} src="/open-eye.png" className={`${styles.icon} ${styles.open_eye}`} onClick={toggleVisiblity} />
+            </div>
             <button className={styles.button} onClick={handleSubmit3}>JOIN NOW</button>
           </form>
         </div>

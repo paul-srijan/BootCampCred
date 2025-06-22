@@ -12,6 +12,24 @@ export default function Section1() {
     const [data, setData] = useState();
     const router = useRouter();
 
+    const [parsedData, setParsedData] = useState({});
+
+
+    useEffect(() => {
+        const userData = sessionStorage.getItem("userData");
+
+        if (userData) {
+            const data = JSON.parse(userData);
+            if (data.role === 'student') {
+                setParsedData(data);
+            } else {
+                router.push('/');
+            }
+        } else {
+            router.push('/');
+        }
+    }, []);
+
     const getData = async (id) => {
       try {
         const response = await fetch(``);
