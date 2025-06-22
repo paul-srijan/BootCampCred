@@ -175,7 +175,6 @@
     height: 150mm; /* A4 height */
     position: relative;
     margin-top: 0px;
-    background: url("/certificate.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -198,25 +197,52 @@
     color: #000;
   }
   
-  .username{
+  /* .username{
     font-size: 28px;
-    margin-top: 180px;
-    margin-left: -4px;
-    font-size: 50px;
+    margin-top: 254px;
+    font-size: 54px;
     margin-bottom: 0px;
-    color: #F0C145;
+    color: #d8a003;
+    width:100%;
+    text-align:center;
   }
   
   .para{
-    font-weight: 500;
-    width: 450px;
+    font-weight: 300;
+    width: 100%;
+    padding:0px 64px;
     text-align: center;
-    line-height: 17px;
-    margin-left: 94px;
-    margin-top: 20px;
-    font-size: 12px;
-    color: #fff;
-  }
+    line-height: 21px;
+    margin-top: 24px;
+    font-size: 14px;
+    color: #fefefe;
+  } */
+
+  .username {
+  font-size: var(--username-font-size);
+  margin-top: var(--username-margin-top);
+  margin-bottom: var(--username-margin-bottom);
+  color: var(--username-color);
+  width: var(--username-width);
+  text-align: var(--username-text-align);
+  position: relative;
+  z-index: 1;
+}
+
+.para {
+  font-size: var(--message-font-size);
+  line-height: var(--message-line-height);
+  margin-top: var(--message-margin-top);
+  color: var(--message-color);
+  width: var(--message-width);
+  text-align: var(--message-text-align);
+  padding: var(--message-padding, 0px);
+  padding-left: var(--message-padding-left, 0px);
+  padding-right: var(--message-padding-right, 0px);
+  font-weight: var(--message-font-weight);
+  position: relative;
+  z-index: 1;
+}
   
   .downloadButton {
     margin-top: 20px;
@@ -336,233 +362,242 @@
 
 @media print {
 
-    .main {
-        width:100%;
-        height:100%;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-    }
-    
-    .container {
-        width:85%;
-        height:55%;
-        display:flex;
-    }
-    
-    .left {
-        width:48%;
-        height:100%;
-        background:url('/bg.png');
-        background-size:cover;
-        background-position:center;
-    }
-    
-    .right {
-        position:relative;
-        z-index:999;
-        width:52%;
-        height:100%;
-        display:flex;
-        flex-direction:column;
-        justify-content:center;
-        align-items:flex-end;
-    }
-    
-    .p {
-        color:#fefefe;
-        font-weight:300;
-        letter-spacing:1.2px;
-        text-align:right;
-    }
-    
-    .teal {
-        color:#57E3E1;
-        font-weight:500;
-    }
-    
-    .medium {
-        width:100%;
-        font-size:28px;
-        font-weight:600;
-        letter-spacing:1.25px;
-        color:#ffff;
-        margin:12px;
-        text-align:right;
-    }
-    
-    .bg {
-        width:184px;
-        margin-left:calc(100% - 178px);
-        background:linear-gradient(90deg, #BA0E42, #54D6D5);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        text-align:right;
-    }
-    
-    .text {
-        font-size:48px;
-        font-weight:700;
-        text-align:right;
-    }
-    
-    .form_wrapper {
-        width:345px;
-        z-index:1001;
-        transition:all 0.5s ease-in-out;
-        margin-top:34px;
-    }
-    
-    .label {
-        float:right;
-        font-size:18px;
-        color:#fefefe;
-        font-weight:300;
-        background-color:#1B1B1B;
-    }
-    
-    .input {
-        width:100%;
-        height:38px;
-        border-radius:6px;
-        margin-top:8px;
-        font-size:16px;
-        font-weight:300;
-        padding-left:16px;
-        background-color:transparent;
-        border:0.27px solid #fefefe;
-        color:#fefefe;
-    }
-    
-    .button {
-        padding:12px 18px;
-        background-color:#BA0E42;
-        color:#ffff;
-        font-weight:400;
-        letter-spacing:1.2px;
-        font-size:14px;
-        font-weight:500;
-        border-radius:8px;
-        float:right;
-        margin-top:34px;
-    }
-    
-    .form1 .p {
-        transform:translateX(12px);
-    }
-    
-    .txt {
-        width:100%;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        color:#ffffffe8;
-    }
-    
-    .span {
-        color:#d31c53;
-        font-size:54px;
-    }
-    
-    .points {
-        font-size:74px;
-        width:64px;
-        margin-left:calc(100% - 64px);
-    }
-    
-    .display {
-        margin-top:28px;
-    }
-    
-    .overlay {
-        width:100%;
-        height:100%;
-        position:absolute;
-        top:50%;
-        left:50%;
-        transform:translate(-50%, -50%);
-        z-index:9999;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        background-color:#101010ba;
-        flex-direction:column;
-        backdrop-filter:blur(3px);
-    }
-    
-    .close {
-        width:30px;
-        height:30px;
-        object-fit:cover;
-        object-position:center;
-        position:absolute;
-        top:20px;
-        right:20px;
-        cursor:pointer;
-    }
-    
-    .certificate {
-        width: 208mm; /* A4 width */
-        height: 150mm; /* A4 height */
-        position: relative;
-        margin-top: 0px;
-        background: url("/certificate.png");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-    
-    .background {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        object-fit: cover;
-      }
-      
-      .content {
-        text-align: center;
-        padding: 20mm;
-        color: #000;
-      }
-      
-      .username{
-        font-size: 28px;
-        margin-top: 180px;
-        margin-left: -4px;
-        font-size: 50px;
-        margin-bottom: 0px;
-        color: #F0C145;
-      }
-      
-      .para{
-        font-weight: 500;
-        width: 450px;
-        text-align: center;
-        line-height: 17px;
-        margin-left: 94px;
-        margin-top: 20px;
-        font-size: 12px;
-        color: #fff;
-      }
-      
-      .downloadButton {
-        margin-top: 20px;
-        padding: 16px 20px;
-        background-color: #BA0E42;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size:16px;
-      }
-      
-      .downloadButton:hover {
-        background-color: #d31c53;
-      }
+.main {
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container {
+    width:85%;
+    height:55%;
+    display:flex;
+}
+
+.left {
+    width:48%;
+    height:100%;
+    background:url('/bg.png');
+    background-size:cover;
+    background-position:center;
+}
+
+.error {
+    font-size:38px;
+    color:#fefefe;
+    letter-spacing:1.2px;
+}
+
+.right {
+    position:relative;
+    z-index:999;
+    width:52%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:flex-end;
+}
+
+.p {
+    color:#fefefe;
+    font-weight:300;
+    letter-spacing:1.2px;
+    text-align:right;
+}
+
+.teal {
+    color:#57E3E1;
+    font-weight:500;
+}
+
+.medium {
+    width:100%;
+    font-size:28px;
+    font-weight:600;
+    letter-spacing:1.25px;
+    color:#ffff;
+    margin:12px;
+    text-align:right;
+}
+
+.bg {
+    width:184px;
+    margin-left:calc(100% - 178px);
+    background:linear-gradient(90deg, #BA0E42, #54D6D5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-align:right;
+}
+
+.text {
+    font-size:48px;
+    font-weight:700;
+    text-align:right;
+}
+
+.form_wrapper {
+    width:345px;
+    z-index:1001;
+    transition:all 0.5s ease-in-out;
+    margin-top:34px;
+}
+
+.label {
+    float:right;
+    font-size:18px;
+    color:#fefefe;
+    font-weight:300;
+    background-color:#1B1B1B;
+}
+
+.input {
+    width:100%;
+    height:38px;
+    border-radius:6px;
+    margin-top:8px;
+    font-size:16px;
+    font-weight:300;
+    padding-left:16px;
+    background-color:transparent;
+    border:0.27px solid #fefefe;
+    color:#fefefe;
+}
+
+.button {
+    padding:12px 18px;
+    background-color:#BA0E42;
+    color:#ffff;
+    font-weight:400;
+    letter-spacing:1.2px;
+    font-size:14px;
+    font-weight:500;
+    border-radius:8px;
+    float:right;
+    margin-top:34px;
+}
+
+.form1 .p {
+    transform:translateX(12px);
+}
+
+.txt {
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#ffffffe8;
+}
+
+.span {
+    color:#d31c53;
+    font-size:54px;
+}
+
+.points {
+    font-size:74px;
+    width:64px;
+    margin-left:calc(100% - 64px);
+}
+
+.display {
+    margin-top:28px;
+}
+
+.overlay {
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    z-index:9999;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background-color:#101010ba;
+    flex-direction:column;
+    backdrop-filter:blur(3px);
+}
+
+.close {
+    width:30px;
+    height:30px;
+    object-fit:cover;
+    object-position:center;
+    position:absolute;
+    top:20px;
+    right:20px;
+    cursor:pointer;
+}
+
+.certificate {
+    width: 208mm; /* A4 width */
+    height: 150mm; /* A4 height */
+    position: relative;
+    /* margin-top: -500px; */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    object-fit: cover;
+    /* padding-top: 250px */
+  }
+  
+  .content {
+    text-align: center;
+    padding: 20mm;
+    color: #000;
+
+  }
+  
+  .username{
+    margin-top:250px;
+    position: fixed;
+  }
+  
+  .para{
+    font-weight: 300;
+    width: 100%;
+    padding:0px 64px;
+    /* text-align: center; */
+    line-height: 21px;
+    /* margin-top: 240px !important; */
+    padding-top: 260px !important;
+    font-size: 14px;
+    position: fixed;
+  }
+  
+  .downloadButton {
+    margin-top: 20px;
+    padding: 16px 20px;
+    background-color: #BA0E42;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size:16px;
+  }
+  
+  .downloadButton:hover {
+    background-color: #d31c53;
+  }
+
+  .main {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
 
 }

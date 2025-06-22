@@ -1,5 +1,4 @@
-'use client';
-
+"use client";
 import styles from "../../../styles/admin/bootcamp/section2.module.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";

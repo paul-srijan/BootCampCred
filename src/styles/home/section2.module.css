@@ -207,6 +207,33 @@
     background-color:#1B1B1B;
 }
 
+.password_div {
+    position:relative;
+    width:100%;
+    /* background-color:#54D6D5; */
+}
+
+.icon {
+    position:absolute;
+    top:50%;
+    transform:translateY(-25%);
+    right:10px;
+    width:24px;
+    height:24px;
+    object-fit:cover;
+}
+
+.close_eye {
+    top:10px;
+    transform:translateY(0);
+    width:42px;
+    height:42px;
+}
+
+.open_eye {
+    right:18px;
+}
+
 .input {
     width:100%;
     height:38px;

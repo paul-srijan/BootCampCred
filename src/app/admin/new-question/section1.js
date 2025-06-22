@@ -1,5 +1,4 @@
-'use client';
-
+"use client";
 import styles from "../../../styles/admin/bootcamp/section1.module.css";
 import Section2 from "./section2";
 import Section3 from "./section3";

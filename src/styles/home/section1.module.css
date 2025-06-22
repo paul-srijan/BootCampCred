@@ -132,7 +132,7 @@
 
 .form_wrapper {
     position:absolute;
-    top:7%;
+    top:4%;
     right:154px;
     width:345px;
     z-index:1001;
@@ -140,7 +140,7 @@
 }
 
 .codecombat {
-    margin-top:7%;
+    margin-top:4%;
 }
 
 .label {
@@ -162,6 +162,10 @@
     background-color:transparent;
     border:0.27px solid #fefefe;
     color:#fefefe;
+}
+
+.error_mssg {
+    text-align:center;
 }
 
 .button {
@@ -191,6 +195,12 @@
     margin-top:24px;
 }
 
+.password_div {
+    position:relative;
+    width:100%;
+    /* background-color:#54D6D5; */
+}
+
 .popup {
     position:fixed;
     display:flex;
@@ -207,6 +217,27 @@
     padding:40px 20px;
 }
 
+.icon {
+    position:absolute;
+    top:50%;
+    transform:translateY(-25%);
+    right:10px;
+    width:24px;
+    height:24px;
+    object-fit:cover;
+}
+
+.close_eye {
+    top:10px;
+    transform:translateY(0);
+    width:42px;
+    height:42px;
+}
+
+.open_eye {
+    right:18px;
+}
+
 .custom_select {
     width:100%;
 }
@@ -221,11 +252,13 @@
 }
 
 .gif {
-    width:180px;
-    height:180px;
+    width:184px;
+    height:184px;
     object-fit:cover;
     object-position:center;
-    transform:translate(50%, 100%);
+    margin-top:60%;
+    margin-left:50%;
+    transform:translateX(-50%);
 }
 
 .select {
@@ -239,9 +272,8 @@
 }
 
 .tick {
-    width:240px;
-    height:240px;
-    margin-left:-54px;
+    width:286px;
+    height:286px;
 }
 
 .p {

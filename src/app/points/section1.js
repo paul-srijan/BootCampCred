@@ -9,6 +9,24 @@ import { useState, useEffect } from "react";
 export default function Section1() {
     const [mobile, setMobile] = useState(false);
 
+    const [parsedData, setParsedData] = useState({});
+
+
+    useEffect(() => {
+        const userData = sessionStorage.getItem("userData");
+
+        if (userData) {
+            const data = JSON.parse(userData);
+            if (data.role === 'student') {
+                setParsedData(data);
+            } else {
+                router.push('/');
+            }
+        } else {
+            router.push('/');
+        }
+    }, []);
+
     useEffect(() => {
         const checkIsMobile = () => {
           setMobile(window.innerWidth <= 601);

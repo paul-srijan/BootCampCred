@@ -1,9 +1,30 @@
+'use client';
+
 import styles from "../../styles/quiz/section1.module.css";
-import Section2 from "../contest/section2";
+import Section2 from "../dashboard/section2";
 import Section3 from "../quiz/section3";
 import Section4 from "../quiz/section4";
+import { useState, useEffect } from "react";
 
 export default function Section1() {
+        const [parsedData, setParsedData] = useState({});
+    
+    
+        useEffect(() => {
+            const userData = sessionStorage.getItem("userData");
+    
+            if (userData) {
+                const data = JSON.parse(userData);
+                if (data.role === 'student') {
+                    setParsedData(data);
+                } else {
+                    router.push('/');
+                }
+            } else {
+                router.push('/');
+            }
+        }, []);
+
     return (
         <main className={styles.main}>
 

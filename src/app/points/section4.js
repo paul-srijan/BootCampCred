@@ -36,7 +36,6 @@ export default function Section4() {
             });
 
             if (response.ok) {
-                console.log('Entry submitted successfully!');
                 getPoints();
             } else {
                 console.error('Failed to submit entry:', response.status, response.statusText);

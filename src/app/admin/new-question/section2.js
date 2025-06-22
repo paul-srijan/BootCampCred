@@ -1,5 +1,4 @@
-'use client';
-
+"use client";
 import styles from "../../../styles/admin/bootcamp/section2.module.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -38,7 +37,7 @@ export default function Section2() {
             <div className={styles.panel} style={{ transform: `translateX(${translate})` }}>
                 <img src="/close.png" alt="404" className={styles.close} onClick={() => setTranslate('-100%')} />
                 <ul className={styles.ul}>
-                    <li className={`${styles.li}`} style={{ marginBottom: '28px;' }}><img src="/dashboard.png" alt="404" className={styles.icon} /> <p className={`${styles.text} ${styles.heading}`}>Dashboard</p></li>
+                    <li className={`${styles.li}`} style={{ marginBottom: '28px' }}><img src="/dashboard.png" alt="404" className={styles.icon} /> <p className={`${styles.text} ${styles.heading}`}>Dashboard</p></li>
                     <a href="/admin/bootcamp"><li className={`${styles.li}`}><img src="/event-icon.png" alt="404" className={styles.icon} /> <p className={styles.text}>Bootcamps</p></li></a>
                     <a href="/admin/new-bootcamp"><li className={`${styles.li}`}><img src="/add.png" alt="404" className={styles.icon} /> <p className={styles.text}>New Bootcamp</p></li></a>
                     <a href="/admin/new-question"><li className={`${styles.li} ${styles.active}`}><img src="/quiz.png" alt="404" className={styles.icon} /> <p className={styles.text}>New Question</p></li></a>
