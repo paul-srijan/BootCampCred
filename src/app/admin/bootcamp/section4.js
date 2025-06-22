@@ -518,26 +518,56 @@ export default function Section4() {
       });
     }
 
-    const fetchStudentData = async (datas) => {
-        try {
-            const results = await Promise.all(
-                datas.map(async (id) => {
-                    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get?action=user_by_id&id=${id}`);
+    // const fetchStudentData = async (datas) => {
+    //     try {
+    //         const results = await Promise.all(
+    //             datas.map(async (id) => {
+    //                 const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get?action=user_by_id&id=${id}`);
 
-                    if(response.ok) {
-                      const result = await response.json();
-                      return result;
-                    } else {
-                        console.log("an unexpected error occured!");
-                    }
-                })
-            );
+    //                 if(response.ok) {
+    //                   const result = await response.json();
+    //                   return result;
+    //                 } else {
+    //                     console.log("an unexpected error occured!");
+    //                 }
+    //             })
+    //         );
             
-            setStudents(results.length == 0 ? [] : results);
-          } catch (error) {
-            console.error("Error fetching student data:", error);
-          }
-      };
+    //         console.log(results);
+    //         setStudents(results.length == 0 ? [] : results);
+    //       } catch (error) {
+    //         console.error("Error fetching student data:", error);
+    //       }
+    //   };
+
+    const fetchStudentData = async (datas, batchSize = 5) => {
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
+  const fetchUserById = async (id) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get?action=user_by_id&id=${id}`);
+      if (response.ok) return await response.json();
+      console.warn(`Fetch failed for ID: ${id}`);
+      return null;
+    } catch (error) {
+      console.error(`Error fetching ID ${id}:`, error);
+      return null;
+    }
+  };
+
+  const results = [];
+  for (let i = 0; i < datas.length; i += batchSize) {
+    const batch = datas.slice(i, i + batchSize);
+    const batchResults = await Promise.all(batch.map(fetchUserById));
+    results.push(...batchResults.filter(Boolean));
+    
+    // Optional delay between batches (to avoid hitting server limits)
+    await delay(100); // 100ms delay between batches
+  }
+
+  console.log(results);
+  setStudents(results.length === 0 ? [] : results);
+};
     
     return (
         <main className={styles.main}>
@@ -743,7 +773,7 @@ export default function Section4() {
 
             {/* popup for displaying students */}
             <div className={`${styles.popup} ${styles.table}`} style={{ display: `${dsply}` }}>
-              <img src="/close.png" className={styles.close} style={{ width: "28px", height: "28px" }} onClick={() => {setDsply('none'); setStudents([])}} />
+              <img src="/close.png" className={styles.close} style={{ width: "28px", height: "28px" }} onClick={() => {setDsply('none');}} />
               <div className={styles.btn_wrapper}>
                 <p className={styles.heading} style={{ color: "#fefefe", fontSize: "20px", marginRight: "16px" }}>View Students</p>
                 <button className={`${styles.add_btn} ${styles.coor}`} onClick={() => setShowCoor('block')}>Add Coordinator</button>
