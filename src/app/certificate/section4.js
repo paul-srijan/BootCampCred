@@ -112,33 +112,97 @@ export default function Section4() {
         },
     ]
 
-async function fetchData(hostname) {
-    certificates.map((item, idx) => {
-        if(item.host_name == hostname) {
-            const [month, role, ...rest] = id.split('_');
+function getResponsiveStyle(desktopStyle, mobileStyle) {
+  const isMobile = window.innerWidth <= 600;
+  return isMobile ? { ...desktopStyle, ...mobileStyle } : desktopStyle;
+}
 
-            if (role == 'N') {
-                if(item.key == "normal") {
-                    setUrl(item.certificate || '');
-                    setUsernameStyle(item.username);
-                    setMessageStyle(item.message);
-                }
-            } else if (role == 'C') {
-                if(item.key == "coor") {
-                    setUrl(item.certificate || '');
-                    setUsernameStyle(item.username);
-                    setMessageStyle(item.message);
-                }
-            } else if (role == 'O') {
+// async function fetchData(hostname) {
+//     certificates.map((item, idx) => {
+//         if(item.host_name == hostname) {
+//             const [month, role, ...rest] = id.split('_');
+
+//             if (role == 'N') {
+//                 if(item.key == "normal") {
+//                     setUrl(item.certificate || '');
+//                     setUsernameStyle(item.username);
+//                     setMessageStyle(item.message);
+//                 }
+//             } else if (role == 'C') {
+//                 if(item.key == "coor") {
+//                     setUrl(item.certificate || '');
+//                     setUsernameStyle(item.username);
+//                     setMessageStyle(item.message);
+//                 }
+//             } else if (role == 'O') {
                 
-                if(item.key == "outreach") {
-                    setUrl(item.certificate || '');
-                    setUsernameStyle(item.username);
-                    setMessageStyle(item.message);
-                }
-            }
-        }
-});
+//                 if(item.key == "outreach") {
+//                     setUrl(item.certificate || '');
+//                     setUsernameStyle(item.username);
+//                     setMessageStyle(item.message);
+//                 }
+//             }
+//         }
+// });
+// }
+
+async function fetchData(hostname) {
+  certificates.forEach((item) => {
+    if (item.host_name === hostname) {
+      const [month, role] = id.split('_');
+
+      let expectedKey = '';
+      let mobileUsername = {};
+      let mobileMessage = {};
+
+      // Set expectedKey and role-specific mobile overrides
+      switch (role) {
+        case 'N':
+          expectedKey = 'normal';
+          mobileUsername = { fontSize: '38px', marginTop: '184px' };
+          mobileMessage = {
+            fontSize: '12px',
+            padding: '0 28px',
+            lineHeight: '12px',
+            marginTop: '10px'
+          };
+          break;
+
+        case 'C':
+          expectedKey = 'coor';
+          mobileUsername = { fontSize: '36px', marginTop: '144px', marginLeft: '25px', marginBottom: '0px' };
+          mobileMessage = {
+            fontSize: '12px',
+            padding: '0 22px',
+            lineHeight: '14px',
+            marginTop: '38px'
+          };
+          break;
+
+        case 'O':
+          expectedKey = 'outreach';
+          mobileUsername = { fontSize: '34px', marginTop: '138px', marginBottom: '0px' };
+          mobileMessage = {
+            fontSize: '14px',
+            padding: '0 30px',
+            lineHeight: '16px',
+            marginTop: '34px'
+          };
+          break;
+
+        default:
+          return;
+      }
+
+      // Apply if the certificate type matches
+      if (item.key === expectedKey) {
+        setUrl(item.certificate || '');
+
+        setUsernameStyle(getResponsiveStyle(item.username, mobileUsername));
+        setMessageStyle(getResponsiveStyle(item.message, mobileMessage));
+      }
+    }
+  });
 }
 
 const downloadCertificateAsImage = async () => {
