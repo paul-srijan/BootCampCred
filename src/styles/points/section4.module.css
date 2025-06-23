@@ -218,7 +218,7 @@
     color: #fefefe;
   } */
 
-  .username {
+  /* .username {
   font-size: var(--username-font-size);
   margin-top: var(--username-margin-top);
   margin-bottom: var(--username-margin-bottom);
@@ -242,7 +242,7 @@
   font-weight: var(--message-font-weight);
   position: relative;
   z-index: 1;
-}
+} */
   
   .downloadButton {
     margin-top: 20px;
@@ -281,6 +281,13 @@
 
     .form1 {
         margin-top:34px;
+    }
+
+    .para {
+        padding:0px 24px;
+        margin-top:12px;
+        line-height:12px;
+        font-size:12px;
     }
 
     .error {
