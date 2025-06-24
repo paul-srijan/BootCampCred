@@ -416,7 +416,7 @@
 
     .container {
         width:99%;
-        height:457px;
+        height:237px;
     }
 
     .flexbox {
@@ -497,6 +497,33 @@
     
     .table {
         width:95%;
-        height:405px;
+        height:455px;
+    }
+
+    .outreach {
+        margin-top:12px;
+        margin-left:16px;
+    }
+
+    .btn_wrapper {
+        display:flex;
+        flex-direction: column;
+        width:100%;
+        flex-wrap:wrap;
+    }
+
+    .add_btn {
+        width:auto;
+        height:34px;
+    }
+
+    .outreach {
+        width:237px;
+    }
+
+    .coor {
+        width:204px;
+        margin-left:16px;
+        margin-top:16px;
     }
 }

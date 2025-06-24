@@ -24,7 +24,7 @@ export default function Section1() {
     }, []);
 
     return (
-        <main className={styles.main}>
+        <main className={styles.main} style={{ overflow: 'hidden' }}>
 
         <img src="/cross.png" alt="404" className={styles.cross} />
         

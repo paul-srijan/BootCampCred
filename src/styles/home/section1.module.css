@@ -337,7 +337,7 @@
         will-change:transform;
         position:relative;
         margin:54px 0px;
-        left:-8px;
+        left:0px;
     }
 
     .label {
