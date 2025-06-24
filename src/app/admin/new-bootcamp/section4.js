@@ -93,8 +93,8 @@ export default function Section4() {
             <select type="text" className={`${styles.input} ${styles.select}`} name="topic" value={formData.topic} onChange={handleChange}>
               <option value="C" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>C</option>
               <option value="C++" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>C++</option>
-              <option value="DSA using C" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>DSA using C</option>
-              <option value="DSA using C++" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>DSA using C++</option>
+              <option value="DSA with C" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>DSA using C</option>
+              <option value="DSA with C++" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>DSA using C++</option>
               <option value="Java" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Java</option>
               <option value="Python" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Python</option>              
               <option value="AI and ML" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>AI & ML</option>
@@ -106,6 +106,7 @@ export default function Section4() {
               <option value="Generative AI" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Generative AI</option>
               <option value="AI Agents" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>AI Agents</option>
               <option value="Cloud Development" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Cloud Development</option>
+              <option value="UI and UX" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>UI and UX</option> 
             </select><br/><br/>
     
             <label className={styles.label} forhtml="host-name">Host Name</label><br/><br/>

@@ -53,7 +53,6 @@ export default function Section4() {
         if(response.ok) {
           const result = await response.json();
           setSelectOpt('');
-          setBootcampID('');
           setShowCoor('none');
         } else {
           console.log("error occured.");
@@ -77,7 +76,6 @@ export default function Section4() {
         if(response.ok) {
           const result = await response.json();
           setSelectOpt('');
-          setBootcampID('');
           setShowCoor1('none');
         } else {
           console.log("error occured.");
@@ -518,57 +516,39 @@ export default function Section4() {
       });
     }
 
-    // const fetchStudentData = async (datas) => {
-    //     try {
-    //         const results = await Promise.all(
-    //             datas.map(async (id) => {
-    //                 const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get?action=user_by_id&id=${id}`);
+    const fetchStudentData = async (bootcamp) => {
+        try {
 
-    //                 if(response.ok) {
-    //                   const result = await response.json();
-    //                   return result;
-    //                 } else {
-    //                     console.log("an unexpected error occured!");
-    //                 }
-    //             })
-    //         );
-            
-    //         console.log(results);
-    //         setStudents(results.length == 0 ? [] : results);
-    //       } catch (error) {
-    //         console.error("Error fetching student data:", error);
-    //       }
-    //   };
+          const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get?action=user_by_id&id=${bootcamp}`);
 
-    const fetchStudentData = async (datas, batchSize = 5) => {
-  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+          if(response.ok) {
+            const result = await response.json();
+            setStudents(result.length == 0 ? [] : result);
+          } else {
+            console.log("an unexpected error occured!");
+          }
+          } catch (error) {
+            console.error("Error fetching student data:", error);
+          }
+      };
 
-  const fetchUserById = async (id) => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get?action=user_by_id&id=${id}`);
-      if (response.ok) return await response.json();
-      console.warn(`Fetch failed for ID: ${id}`);
-      return null;
-    } catch (error) {
-      console.error(`Error fetching ID ${id}:`, error);
-      return null;
-    }
+  const roleMap = {
+    N: "Participant",
+    C: "Core Coordinator",
+    O: "Outreach Coordinator",
   };
 
-  const results = [];
-  for (let i = 0; i < datas.length; i += batchSize) {
-    const batch = datas.slice(i, i + batchSize);
-    const batchResults = await Promise.all(batch.map(fetchUserById));
-    results.push(...batchResults.filter(Boolean));
-    
-    // Optional delay between batches (to avoid hitting server limits)
-    await delay(100); // 100ms delay between batches
-  }
+  const getRolesFromIds = (certificateString) => {
+    return Array.from(
+      new Set(
+        certificateString
+          .split(',')
+          .map(id => roleMap[id.split('_')[1]])
+          .filter(Boolean)
+      )
+    );
+  };
 
-  console.log(results);
-  setStudents(results.length === 0 ? [] : results);
-};
-    
     return (
         <main className={styles.main}>
             <div className={styles.filter}>
@@ -610,7 +590,7 @@ export default function Section4() {
             <tr key={index}>
                 <td className={styles.whitespace}>{index + 1}</td>
                 <td style={{ textAlign: "left" }}><img className={styles.trash} onClick={() => {setPopupDelete("block"); setId(item.id);}} src="/trash.png" /> {item.id}</td>
-                <td className={styles.whitespace} onClick={() => {setDsply('block'); setBootcampID(item.id); fetchStudentData(item.enrolled_students); }}>{item.name} <img src="/open-eye.png" className={styles.dropdown} style={{ width: '20px', height: '20px', marginBottom: '-4px', cursor: 'pointer' }} /></td>
+                <td className={styles.whitespace} onClick={() => {setDsply('block'); setBootcampID(item.id); fetchStudentData(item.id); }}>{item.name} <img src="/open-eye.png" className={styles.dropdown} style={{ width: '20px', height: '20px', marginBottom: '-4px', cursor: 'pointer' }} /></td>
                 <td className={styles.whitespace}>{item.topic}</td>
                 <td className={styles.whitespace}>
                     <button className={styles.view} onClick={() => handleOptionUpdate(item.topic, item.id)}>VIEW</button>
@@ -773,7 +753,7 @@ export default function Section4() {
 
             {/* popup for displaying students */}
             <div className={`${styles.popup} ${styles.table}`} style={{ display: `${dsply}` }}>
-              <img src="/close.png" className={styles.close} style={{ width: "28px", height: "28px" }} onClick={() => {setDsply('none');}} />
+              <img src="/close.png" className={styles.close} style={{ width: "28px", height: "28px" }} onClick={() => {setDsply('none'); setStudents([]);}} />
               <div className={styles.btn_wrapper}>
                 <p className={styles.heading} style={{ color: "#fefefe", fontSize: "20px", marginRight: "16px" }}>View Students</p>
                 <button className={`${styles.add_btn} ${styles.coor}`} onClick={() => setShowCoor('block')}>Add Coordinator</button>
@@ -783,6 +763,7 @@ export default function Section4() {
             <table>
             <thead>
             <tr>
+                <th className={styles.th}>Sl No.</th>
                 <th className={styles.th}>Name</th>
                 <th className={styles.th}>Bootcamp ID</th>
                 <th className={styles.th}>Email</th>
@@ -791,17 +772,28 @@ export default function Section4() {
             </tr>
             </thead>
             <tbody>
-            {students.length != 0 ? (students.map((item, index) => (
-            <tr key={index}>
-                <td className={styles.td}>{item.full_name}</td>
-                <td className={styles.td}>{item.bootcamp_id}</td>
-                <td className={styles.td}>{item.email}</td>
-                <td className={styles.td}>{item.phone_number}</td>
-                <td className={styles.td}><div className={styles.role_div}>{item.role}</div></td>
-            </tr>
-            ))) : (
+            {students.length !== 0 ? (
+              students.map((item, index) => {
+                const roles = getRolesFromIds(item.certificate_id);
+
+                return (
+                  <tr key={index}>
+                    <td className={styles.td}>{index+1}</td>
+                    <td className={styles.td}>{item.full_name}</td>
+                    <td className={styles.td}>{item.bootcamp_id}</td>
+                    <td className={styles.td}>{item.email}</td>
+                    <td className={styles.td}>{item.phone_number}</td>
+                    <td className={styles.td}>
+                      <div className={styles.role_div}>
+                        {roles.join(', ')}
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
               <tr>
-                <td colSpan="5">No User Data Found!</td>
+                <td colSpan="6">No User Data Found!</td>
               </tr>
             )}
             </tbody>
@@ -811,7 +803,7 @@ export default function Section4() {
 
             {/* popup to update core coordinators */}
             <div className={`${styles.popup} ${styles.popup_new}`} style={{ display: `${showCoor}` }}>
-                <img src="/close.png" className={styles.close}onClick={() => setShowCoor('none')} />
+                <img src="/close.png" className={styles.close} onClick={() => {setShowCoor('none'); fetchStudentData(bootcampID);}} />
                 <label className={styles.label}>Add New Coordinator :</label><br/><br/>
                 <select className={styles.select_} onChange={(e) => setSelectOpt(e.target.value)}>
                   <option disable="true">Choose Student</option>
@@ -825,7 +817,7 @@ export default function Section4() {
 
             {/* popup to update outreach coordinators */}
             <div className={`${styles.popup} ${styles.popup_new}`} style={{ display: `${showCoor1}` }}>
-                <img src="/close.png" className={styles.close}onClick={() => setShowCoor1('none')} />
+                <img src="/close.png" className={styles.close} onClick={() => {setShowCoor1('none')}} />
                 <label className={styles.label}>Add Outreach Coordinator :</label><br/><br/>
                 <select className={styles.select_} onChange={(e) => setSelectOpt(e.target.value)}>
                   <option disable="true">Choose Student</option>

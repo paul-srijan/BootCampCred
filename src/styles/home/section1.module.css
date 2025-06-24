@@ -317,6 +317,10 @@
        left:0;
     }
 
+    .icon {
+        right:-29px;
+    }
+
     .container {
         margin-left:64px;
     }
@@ -330,6 +334,7 @@
     }
 
     .form_wrapper {
+        will-change:transform;
         position:relative;
         margin:54px 0px;
         left:-8px;
@@ -356,14 +361,19 @@
         margin-right:-36px;
     }
 
-    .gif {
-        transform:translate(50%, 0%);
-    }
-
     .tick {
-        margin-left:0px;
         position:relative;
         z-index:9999;
+        transform:translateX(-34%);
+    }
+
+    .gif_ {
+        transform:translateX(-25%);
+    }
+
+    .gif {
+        margin-top:0%;
+        margin-left:50%;
     }
 
 }

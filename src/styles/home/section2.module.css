@@ -319,6 +319,14 @@
         padding:0px 10px;
     }
 
+    .icon {
+        right:-29px;
+    }
+
+    .mob_icon {
+        right:10px;
+    }
+
     .form_wrapper {
         background-color:#191919;
         top:0;

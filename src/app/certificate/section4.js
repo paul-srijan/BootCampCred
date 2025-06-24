@@ -159,34 +159,36 @@ async function fetchData(hostname) {
       switch (role) {
         case 'N':
           expectedKey = 'normal';
-          mobileUsername = { fontSize: '24px', marginTop: '198px' };
+          mobileUsername = { fontSize: '54px', marginTop: '274px' };
           mobileMessage = {
-            fontSize: '12px',
-            padding: '0 28px',
-            lineHeight: '12px',
-            marginTop: '8px'
+            fontSize: '20px',
+            padding: '0 20px',
+            lineHeight: 'normal',
+            marginTop: '23px'
           };
           break;
 
         case 'C':
           expectedKey = 'coor';
-          mobileUsername = { fontSize: '24px', marginTop: '144px', marginLeft: '25px', marginBottom: '0px' };
+          mobileUsername = { fontSize: '54px', marginTop: '204px', marginLeft: '35px', marginBottom: '0px' };
           mobileMessage = {
-            fontSize: '12px',
+            fontSize: '20px',
             padding: '0 22px',
-            lineHeight: '14px',
-            marginTop: '38px'
+            lineHeight: 'normal',
+            marginTop: '104px',
+            marginLeft: '15px',
+            width: '70%'
           };
           break;
 
         case 'O':
           expectedKey = 'outreach';
-          mobileUsername = { fontSize: '24px', marginTop: '148px', marginBottom: '0px' };
+          mobileUsername = { fontSize: '54px', marginTop: '190px', marginBottom: '0px' };
           mobileMessage = {
-            fontSize: '12px',
-            padding: '0 30px',
-            lineHeight: '16px',
-            marginTop: '34px'
+            fontSize: '20px',
+            padding: '0 54px',
+            lineHeight: 'normal',
+            marginTop: '78px'
           };
           break;
 
