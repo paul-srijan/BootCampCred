@@ -326,12 +326,20 @@
         padding:74px 12px 24px 12px;
     }
 
-    .certificate {
+    /* .certificate {
         width:100%;
         height:385px;
         background-size:contain;
         box-shadow:none;
-    }
+    } */
+
+    .certificate {
+    width: 208mm !important;
+    height: 150mm !important;
+    background-size: cover !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+    transform:scale(0.5);
+  }
 
     .content {
         padding:0px;
@@ -348,9 +356,9 @@
         margin-left:0px;
     }
 
-    .background {
+    /* .background {
         object-fit:contain;
-    }
+    } */
 
     .para {
         width:86%;
@@ -362,7 +370,7 @@
     }
 
     .downloadButton {
-        margin-top:0px;
+        margin-top:-74px;
     }
 
 }

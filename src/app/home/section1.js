@@ -9,7 +9,15 @@ import { useRouter } from "next/navigation";
 
 export default function Section1() {
     const router = useRouter();
+    const scrollRef = useRef(null);
 
+  const handleOpenForm = () => {
+    setTimeout(() => {
+      scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 300); // match your transition duration
+  };
+
+    const [mobile, setMobile] = useState(false);
     const [bootcamp, setBootcamp] = useState('200%');
     const [showForm, setShowForm] = useState('none');
     const [codeCombat, setCodeCombat] = useState('200%');
@@ -21,6 +29,20 @@ export default function Section1() {
     const [load2, setLoad2] = useState(false);
     const [visible, setVisible] = useState('close');
     const [type, setType] = useState('password');
+
+    useEffect(() => {
+        const checkIsMobile = () => {
+          setMobile(window.innerWidth <= 601);
+        };
+
+        checkIsMobile();
+    
+        window.addEventListener('resize', checkIsMobile);
+    
+        return () => {
+          window.removeEventListener('resize', checkIsMobile);
+        };
+    }, []);
 
     function toggleVisiblity() {
       if(visible == 'close') {
@@ -179,6 +201,7 @@ export default function Section1() {
         <div className={`${styles.bar} ${styles.left}`}></div>
         <div className={`${styles.bar} ${styles.right}`}></div>
 
+       
         <Section2 />
         <Section3 />
 
@@ -190,29 +213,29 @@ export default function Section1() {
             </div>
             <div className={styles.wrapper}>
                 <div className={styles.left_content}>
-                    <button className={styles.btn} onClick={() => display()}>BOOTCAMP</button>
+                    <button className={styles.btn} onClick={() => {display(); if(mobile) {handleOpenForm();}}}>BOOTCAMP</button>
                     <div className={styles.para}>Rise to the <span className={styles.bg}><span className={styles.text}>challenge!</span></span> Tackle obstacles, push your boundaries, and emerge <span className={styles.bg}><span className={styles.text}>victorious</span></span> as a leader in the <span className={styles.bg}><span className={styles.text}>Tech</span></span> arena.</div>
                     <br/><br/>
-                    <button className={styles.btn} onClick={() => Show()}>CODECOMBAT</button>
+                    <button className={styles.btn} onClick={() => {Show(); if(mobile) {handleOpenForm();}}}>CODECOMBAT</button>
                     <div className={styles.para}>Step into the arena! Showcase your <span className={styles.bg}><span className={styles.text}>skills</span></span>, outthink the competition, and claim your title as the ultimate <span className={styles.bg}><span className={styles.text}>challenge!</span></span>.</div>
                 </div>
                 <img src="/circle.png" alt="404" className={styles.image} />
             </div>
         </div>
 
-        <div className={styles.forms_container}>
-        <div className={styles.form_wrapper} style={{ transform: `translateX(${bootcamp})` }}>
+        <div className={styles.forms_container} ref={scrollRef}>
+        <div className={`${styles.form_wrapper}`} style={{ transform: `translateX(${bootcamp})` }}>
           { loading == true ? (
-            <img className={styles.gif} src="/red-loader.gif" alt="gif" />
+            <img className={`${styles.gif} ${styles.gif_}`} src="/red-loader.gif" alt="gif" />
           ) : (
           loading2 == true ? (
-            <img className={`${styles.gif} ${styles.tick}`} src="/checkmark-unscreen.gif" alt="gif" />
+            <img className={`${styles.tick} ${styles.gif}`} src="/checkmark-unscreen.gif" alt="gif" />
           ) : (
             showForm == 'bootcamp' && (
             <>
             <p className={styles.p} style={{ color: '#ffff', fontWeight: '300', letterSpacing: '1px' }}>REGISTER AND JOIN OUR <span style={{ fontSize: '24px' }} className={`${styles.teal} ${styles.bold}`}>Tournament</span></p>
             <br/><br/>
-            <form className={styles.form} method="POST">
+            <form id="bootcamp" className={styles.form} method="POST">
               <label className={styles.label}>Bootcamp <span className={styles.teal} style={{ fontWeight: '500' }}>ID</span></label><br/>
               <input type="text" name="id" className={styles.input} value={formData1.id} onChange={handleChange1} />
               <br/><br/>
@@ -236,6 +259,7 @@ export default function Section1() {
           <option value="Generative AI" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Generative AI</option>
           <option value="AI Agents" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>AI Agents</option>
           <option value="Cloud Development" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Cloud Development</option>
+          <option value="UI and UX" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>UI and UX</option> 
           </select><br/><br/>
               <label className={styles.label}>Your <span className={styles.teal} style={{ fontWeight: '500' }}>Email</span></label><br/>
               <input type="email" name="email" className={styles.input} value={formData1.email} onChange={handleChange1} /><br/><br/>
@@ -266,7 +290,7 @@ export default function Section1() {
           <>
           <p className={styles.p} style={{ color: '#ffff', fontWeight: '300', letterSpacing: '1px' }}>REGISTER AND JOIN OUR <br/> <span style={{ fontSize: '24px' }} className={`${styles.teal} ${styles.bold}`}>Code-Combat</span></p>
           <br/><br/>
-          <form className={styles.form} method="POST">
+          <form id="codecombat" className={styles.form} method="POST">
           <label className={styles.label}>Full <span className={styles.teal} style={{ fontWeight: '500' }}>Name</span></label><br/>
           <input type="text" name="full_name" className={styles.input} value={formData2.full_name} onChange={handleChange2} />
           <br/><br/>
@@ -287,6 +311,7 @@ export default function Section1() {
           <option value="Generative AI" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Generative AI</option>
           <option value="AI Agents" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>AI Agents</option>
           <option value="Cloud Development" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>Cloud Development</option>
+          <option value="UI and UX" className={styles.input} style={{ backgroundColor: '#1b1b1b', paddingRight: '16px' }}>UI and UX</option>
           </select><br/><br/>
             <label className={styles.label}>Your <span className={styles.teal} style={{ fontWeight: '500' }}>Email</span></label><br/>
             <input type="email" name="email" className={styles.input} value={formData2.email} onChange={handleChange2} /><br/><br/>

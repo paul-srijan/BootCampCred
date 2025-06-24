@@ -100,8 +100,8 @@ export default function Section2() {
             <label className={styles.label}>Enter <span className={styles.teal} style={{ fontWeight: '500' }}>Password</span></label><br/>
             <div className={styles.password_div}>
             <input type={type} name="password" className={styles.input} value={formData3.password} onChange={handleChange3} />
-            <img src="/close-eye.png" style={{ display: visible == 'close' ? "block" : "none" }} className={`${styles.icon} ${styles.close_eye}`} onClick={toggleVisiblity} />
-            <img style={{ display: visible == 'open' ? "block" : "none" }} src="/open-eye.png" className={`${styles.icon} ${styles.open_eye}`} onClick={toggleVisiblity} />
+            <img src="/close-eye.png" style={{ display: visible == 'close' ? "block" : "none" }} className={`${styles.icon} ${styles.mob_icon} ${styles.close_eye}`} onClick={toggleVisiblity} />
+            <img style={{ display: visible == 'open' ? "block" : "none" }} src="/open-eye.png" className={`${styles.icon} ${styles.mob_icon} ${styles.open_eye}`} onClick={toggleVisiblity} />
             </div>
             <button className={styles.button} onClick={handleSubmit3}>JOIN NOW</button>
           </form>

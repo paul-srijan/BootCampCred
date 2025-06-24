@@ -308,8 +308,8 @@
 
 .role_div {
     padding:2px;
-    background-color:rgba(14, 240, 14, 0.408);
-    color:rgb(14, 240, 14);
+    /* background-color:rgba(14, 240, 14, 0.408);
+    color:rgb(14, 240, 14); */
     border-radius:6px;
 }
 
