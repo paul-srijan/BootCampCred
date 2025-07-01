@@ -6,16 +6,29 @@ import Section2 from "./section2.js";
 import Section3 from "./section3.js";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { setCookie, getCookie, deleteCookie } from 'cookies-next';
 
 export default function Section1() {
     const router = useRouter();
     const scrollRef = useRef(null);
 
-  const handleOpenForm = () => {
-    setTimeout(() => {
-      scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 300); // match your transition duration
-  };
+  useEffect(() => {
+    if(getCookie('userRole')) {
+    const role = getCookie('userRole');
+
+    if (role === 'admin') {
+      router.push('/admin/bootcamp');
+    } else if (role === 'student') {
+      router.push('/contest');
+    }
+    }
+  }, []);
+
+    const handleOpenForm = () => {
+      setTimeout(() => {
+        scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 300); // match your transition duration
+    };
 
     const [mobile, setMobile] = useState(false);
     const [bootcamp, setBootcamp] = useState('200%');

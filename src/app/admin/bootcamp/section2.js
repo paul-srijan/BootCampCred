@@ -2,6 +2,7 @@
 import styles from "../../../styles/admin/bootcamp/section2.module.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { setCookie, getCookie, deleteCookie } from 'cookies-next';
 
 export default function Section2() {
     const router = useRouter();
@@ -23,7 +24,7 @@ export default function Section2() {
     }, []);
 
     const logout = () => {
-        sessionStorage.removeItem("userData");
+        deleteCookie('userRole');
         router.push('/');
     };
 
