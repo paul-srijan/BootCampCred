@@ -5,6 +5,7 @@
 import styles from "../../styles/home/section2.module.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { setCookie, getCookie, deleteCookie } from 'cookies-next';
 
 export default function Section2() {
     const router = useRouter();
@@ -55,6 +56,10 @@ export default function Section2() {
 
         if(response.ok) {
             sessionStorage.setItem("userData", JSON.stringify(result));
+            setCookie('userRole', result.role, {
+              maxAge: 60 * 60 * 24, // 24 hours in seconds
+              path: '/',
+            });
 
             if(result.role == "student") {
               router.push('/dashboard');
