@@ -208,6 +208,66 @@ export default function Section1() {
       window.location.reload();
     }
 
+    const [botshow, setBotshow] = useState('none');
+
+      const [messages, setMessages] = useState([
+    { sender: 'bot', text: 'Hi! How can I assist you today?' }
+  ]);
+  const [input, setInput] = useState('');
+  const [newloading, setNewLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+
+function convertToPlainText(input) {
+  if (!input || typeof input !== 'string') return '';
+
+  return input
+    // Replace bold and italic Markdown formatting (**text** and *text*)
+    .replace(/\*\*(.+?)\*\*/g, '$1')   // bold
+    .replace(/\*(.+?)\*/g, '$1')       // italic
+
+    // Remove HTML tags but preserve newlines for block elements
+    .replace(/<\/?(p|br|div|h\d|li|ul|ol)[^>]*>/gi, '\n') // convert common block tags to newlines
+    .replace(/<[^>]+>/g, '') // remove all other tags
+
+    // Decode HTML entities if needed (like &amp;)
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
+
+    // Normalize multiple line breaks and spaces
+    .replace(/\n{2,}/g, '\n\n')  // collapse extra newlines
+    .replace(/[ \t]{2,}/g, ' ')  // collapse extra spaces or tabs
+    .trim();
+}
+
+  const handleSend = async () => {
+    if (!input.trim()) return;
+
+    const userMessage = { sender: 'user', text: input };
+    setMessages(prev => [...prev, userMessage]);
+    setInput('');
+    setNewLoading(true);
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/post?action=bot&message=${input}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      const data = await res.json();
+      console.log(data);
+      const botMessage = { sender: 'bot', text: data };
+      setMessages(prev => [...prev, botMessage]);
+    } catch (err) {
+      setMessages(prev => [...prev, { sender: 'bot', text: 'Something went wrong. Please try again.' }]);
+    } finally {
+      setNewLoading(false);
+    }
+  };
+
     return (
         <main className={styles.main}>
         
@@ -353,6 +413,61 @@ export default function Section1() {
           <img src="/close.png" className={styles.close} onClick={close} />
           <p className={styles.error_mssg} style={{ color: error == 'you have successfully registered!' ? '#7CFC00' : '#F08080', fontSize: '20px', marginBottom: '16px', fontWeight: '300', letterSpacing: '1px', marginTop: '14px' }}>{ error !== '' ? (error == 'you have successfully registered!' ? 'you have successfully registered!' : error) : '' }</p>
         </div>
+
+        <div className={`${styles.chatarea}`} style={{ display: `${botshow}`, paddingBottom: '20px' }}>
+          <img src="/icon-close.webp" className={styles.close} onClick={() => setBotshow('none')} />
+          <div className="fixed bottom-4 right-4 z-50">
+      <button
+        onClick={() => setOpen(!open)}
+        className={styles.chat_text}
+      >
+        {open ? 'Close Chat' : 'Chat with AI Srijan 🤖'}
+      </button>
+
+      <br/><br/>
+
+      {open && (
+        <div className="w-80 h-96 bg-white rounded-xl shadow-xl mt-4 flex flex-col">
+          <div className="flex-1 overflow-y-auto p-3 space-y-2">
+            {messages.map((msg, idx) => (
+              <div
+                key={idx}
+                style={{ fontSize: '16px', marginBottom: '8px' }}
+                className={`text-sm p-2 rounded-md ${
+                  msg.sender === 'user'
+                    ? 'bg-blue-100 text-right self-end'
+                    : 'bg-gray-100 text-left self-start'
+                }`}
+              >
+                {convertToPlainText(msg.text)}
+              </div>
+            ))}
+          </div>
+
+          <div style={{ display: "flex" }} className="border-t p-2 flex items-center gap-2">
+            <input style={{ backgroundColor: "#191919", width: "80%", height: "34px", fontSize: "14px", paddingLeft: "16px", outline: "none", borderRadius: "4px", marginTop: "10px", marginRight: "16px" }}
+              type="text"
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              placeholder="Type your question..."
+              className="flex-1 border rounded px-2 py-1 text-sm"
+              onKeyDown={e => e.key === 'Enter' && handleSend()}
+            />
+            <button
+              style={{ width: "94px", height: "36px", color: "#191919", marginTop: "8px" }}
+              onClick={handleSend}
+              disabled={loading}
+            >
+              {newloading ? '...' : 'Send'}
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+
+        </div>     
+
+        <div className={styles.chatbot} onClick={() => setBotshow('block')}></div>
 
         </main>
     );

@@ -22,6 +22,42 @@
     background-repeat:no-repeat;
 }
 
+.chatbot {
+    position:fixed;
+    z-index:99999;
+    background:url('/chatbot.jpg');
+    bottom:64px;
+    right:64px;
+    width:74px;
+    height:74px;
+    border-radius:50%;
+    background-position:center;
+    background-size:cover;
+    cursor:pointer;
+}
+
+.chatarea {
+    position:fixed;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    top:50%;
+    left:50%;
+    height:375px;
+    transform:translate(-50%, -50%);
+    background-color:#fefefe;
+    z-index:9999;
+    width:375px;
+    border-radius:16px;
+    padding:40px 20px;
+    overflow-y:scroll;
+}
+
+.chat_text {
+    font-size:18px;
+}
+
 .right {
     bottom:0;
     right:0;
@@ -286,6 +322,17 @@
         min-height:750px;
         overflow-y:scroll;
         padding-bottom:38px;
+    }
+
+    .chatarea {
+        width:90%;
+    }
+
+    .chatbot {
+        width:64px;
+        height:64px;
+        right:5%;
+        bottom:5%;
     }
 
     .p {
