@@ -55,7 +55,9 @@ export default function Section2() {
         // console.log(result);
 
         if(response.ok) {
+          console.log(result);
             sessionStorage.setItem("userData", JSON.stringify(result));
+
             setCookie('userRole', result.role, {
               maxAge: 60 * 60 * 24, // 24 hours in seconds
               path: '/',

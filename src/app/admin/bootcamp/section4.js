@@ -93,10 +93,10 @@ export default function Section4() {
         {
           topic: "C",
           subtopic: [
-            "History Of C", "Compilation & Structure", "Time & Space Complexity",
-            "Keywords & Variables", "Data Types & Operators", "Conditions & Switch-Case",
-            "Loops", "Functions", "Recursion", "Arrays & Strings", "Pointers",
-            "Structure & Union", "File Handling"
+            "Features & Applications of C", "Structure of a C Program", "if, else, and switch Statements",
+            "Writing & Compiling First C Program", "Setting up C Environment (GCC, VS Code, Code::Blocks)", "Variables & Constants",
+            "Data Types (int, float, char, double)", "Operators (Arithmetic, Logical, Relational, Bitwise)", "printf() and scanf() Functions", "printf() and scanf() Functions", "Type Conversions (Implicit & Explicit)",
+            "Loops (for, while, do-while)", "break, continue, goto Statements", "Nested Loops", "Function Declaration & Definition"
           ]
         },
         {
@@ -115,13 +115,10 @@ export default function Section4() {
         {
           topic: "DSA with C",
           subtopic: [
-            "Arrays", "2D Arrays", "Strings", "Pointers with Arrays",
-            "Structures in DSA", "Linked Lists", "Stacks using Arrays",
-            "Queues using Arrays", "Recursion", "Searching Algorithms (Linear, Binary)",
-            "Sorting Algorithms (Bubble, Insertion, Selection, Merge, Quick)",
-            "Trees (Binary, BST)", "Tree Traversals", "Graphs (Adjacency Matrix/List)",
-            "BFS & DFS", "Hashing", "Greedy Algorithms", "Dynamic Programming",
-            "Backtracking"
+            "Features & Applications of C", "Structure of a C Program", "if, else, and switch Statements",
+            "Writing & Compiling First C Program", "Setting up C Environment (GCC, VS Code, Code::Blocks)", "Variables & Constants",
+            "Data Types (int, float, char, double)", "Operators (Arithmetic, Logical, Relational, Bitwise)", "printf() and scanf() Functions", "printf() and scanf() Functions", "Type Conversions (Implicit & Explicit)",
+            "Loops (for, while, do-while)", "break, continue, goto Statements", "Nested Loops", "Function Declaration & Definition"
           ]
         },
         {
@@ -259,6 +256,7 @@ export default function Section4() {
             const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get?action=bootcamps`);
             const result = await response.json();
 
+            console.log(result);
             setData(result);
             setRenderData(result);
         } catch(error) {
@@ -447,74 +445,120 @@ export default function Section4() {
       }
   }
 
-    const [arr, setArr] = useState([]);
-    const [topic, setTopic] = useState('');
+  const [arr, setArr] = useState([]);
+  const [topic, setTopic] = useState('');
 
-    async function handleOptionUpdate(topic, id) {
-      setTopic(topic);
-      setBootcampID(id);
-    
-      const matched = subtopics.find(item => item.topic === topic);
-      const matchedBootcamp = data.find(item => item.id === id)
-      if (matched) {
-        const subList = matched.subtopic;
-        const selected = matchedBootcamp.subtopics;
-    
-        setArr(subList); // show these in the popup
-        setParams(selected);
-        // Now mark checkboxes as checked if they’re in selected[]
-        const initialChecked = {};
-        subList.forEach((item, idx) => {
-          const checkboxName = `checkbox_${item}_${idx}`;
-          initialChecked[checkboxName] = selected.includes(item);
-        });
-    
-        setIsChecked(initialChecked);
-      }
-    
-      setShowPopup('block');
-    }
+async function handleOptionUpdate(topic, id) {
+  setTopic(topic);
+  setBootcampID(id);
 
-    async function handleTopicUpdate(e) {
-      e.preventDefault();
-      try {        
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/post?action=subtopics&id=${bootcampID}&data=${params}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+  const matched = subtopics.find(item => item.topic === topic);
+  const matchedBootcamp = data.find(item => item.id === id);
 
-        if(response.ok) {
-          const result = await response.json();
-          // router.push('/admin/bootcamp');
-          window.location.reload();
-        } else {
-          console.log("an error occurred!");
+  if (matched) {
+    const subList = matched.subtopic; // contains `[comma]`
+    const selected = matchedBootcamp.subtopics; // contains `[comma]`
+
+    setArr(subList); // we can show as-is for UI
+    setParams(selected); // directly store for submission
+
+    const initialChecked = {};
+
+subList.forEach((item, idx) => {
+  const sanitizedItem = item.replace(/,/g, '[comma]');
+  const checkboxName = `checkbox_${sanitizedItem}_${idx}`;
+
+  // Sanitize both sides to be consistent
+  const isSelected = selected.includes(sanitizedItem);
+
+  initialChecked[checkboxName] = isSelected;
+});
+
+console.log(initialChecked);
+
+    setIsChecked(initialChecked);
+  }
+
+  setShowPopup('block');
+}
+
+    async function updateExams(topic, bootcamp_id, params) {
+      const id = topic == "DSA with C" ? "c_programming" : "";
+      const subtopics = params.join('/');
+
+      console.log(id);
+      console.log(bootcamp_id);
+      console.log(subtopics);
+
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get?action=questions&bootcamp_id=${bootcamp_id}&topics=${subtopics}&id=${id}`);
+            const result = await response.json();
+
+            console.log(result);
+            // window.location.reload();
+        } catch(error) {
+            console.log("an error occured : " + error);
         }
-      } catch(error) {
-        console.log("error submitting subtopics : " + error);
-      }
     }
 
-    function handleCheck(e) {
-      const { name, value, checked } = e.target;
-    
-      setIsChecked(prev => ({
-        ...prev,
-        [name]: checked
-      }));
-    
-      setParams(prev => {
-        const set = new Set(prev);
-        if (checked) {
-          set.add(value);
-        } else {
-          set.delete(value);
-        }
-        return Array.from(set);
-      });
+  async function handleTopicUpdate(e) {
+  e.preventDefault();
+  console.log(topic);
+
+  try {
+    // Step 1: Sanitize each subtopic by replacing commas to avoid backend split issues
+    const sanitizedParams = params.map(item => item.replace(/,/g, '[comma]'));
+
+    // Step 2: Join using comma (since backend likely does .split(','))
+    const dataString = encodeURIComponent(sanitizedParams.join(','));
+
+    // Step 3: Pass it directly in the query (single encoding only)
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/post?action=subtopics&id=${bootcampID}&data=${dataString}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    if (response.ok) {
+      const result = await response.json();
+      console.log(result);
+      updateExams(topic, bootcampID, params); // original array, still intact
+    } else {
+      console.log("An error occurred!");
     }
+  } catch (error) {
+    console.log("Error submitting subtopics: " + error);
+  }
+}
+
+
+function handleCheck(e) {
+  const { name, value, checked } = e.target;
+
+  // Restore actual value by replacing [comma] with ,
+  const actualValue = value.replace(/\[comma\]/g, ','); // convert encoded back
+
+  // Update checkbox UI state
+  setIsChecked(prev => ({
+    ...prev,
+    [name]: checked
+  }));
+
+  // Update params with restored values
+  setParams(prev => {
+    const set = new Set(prev);
+    if (checked) {
+      set.add(actualValue);
+    } else {
+      set.delete(actualValue);
+    }
+    return Array.from(set);
+  });
+}
 
     const fetchStudentData = async (bootcamp) => {
         try {
@@ -725,18 +769,20 @@ export default function Section4() {
                 <h1 className={styles.h} style={{ fontSize: '28px' }}>{topic}</h1>
                 <form className={styles.popupForm} method="POST">
                 {arr.map((item, idx) => {
-                  const checkboxName = `checkbox_${item}_${idx}`; // unique for each item
+                  // const checkboxName = `checkbox_${item}_${idx}`;
+                    const sanitizedItem = item.replace(/,/g, '[comma]');
+                    const checkboxName = `checkbox_${sanitizedItem}_${idx}`;
 
                   return (
                     <div
                       key={checkboxName}
                       className={styles.question}
                     >
-                    <p>{item}</p>
+                    <p>{item.replace(/\[comma\]/g, ',')}</p>
                     <input
                         type="checkbox"
                         name={checkboxName}
-                        value={item}
+                        value={sanitizedItem}
                         className={styles.checkbox}
                         checked={isChecked[checkboxName] || false}
                         onChange={handleCheck}

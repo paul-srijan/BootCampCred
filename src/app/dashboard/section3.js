@@ -15,15 +15,16 @@ export default function Section3() {
     const [id, setId] = useState('');
     const [error, setError] = useState('');
     const [userId, setUserId] = useState('');
+    const [topic, setTopic]= useState('');
 
-    useEffect(() => {
-        const userData = sessionStorage.getItem("userData");
+    // useEffect(() => {
+    //     const userData = sessionStorage.getItem("userData");
 
-        if (userData) {
-            const data = JSON.parse(userData);
-            setUserId(data.user_id);
-        }
-    }, []);
+    //     if (userData) {
+    //         const data = JSON.parse(userData);
+    //         setUserId(data.user_id);
+    //     }
+    // }, []);
 
     function getCurrentDate() {
         const d = new Date();
@@ -42,6 +43,16 @@ export default function Section3() {
     
           if (response.ok) {
             const result = await response.json();
+
+          // const quizDetails = {
+          //   bootcamp_id: result.data.id,
+          //   id: result.data.topic == "DSA with C" ? "c_programming" : "",
+          //   topics: Array.isArray(result.data.subtopics)
+          //     ? result.data.subtopics.join('/')
+          //     : String(result.data.subtopics).split(',').join('/')
+          // };
+
+          // sessionStorage.setItem('quizDetails', JSON.stringify(quizDetails));
             setDuration(result.duration);
             setToday(result.data.today);
           } else {
@@ -51,13 +62,16 @@ export default function Section3() {
           console.log("Fetch error:", error);
         }
       }
+
+      
     
-      // ✅ useEffect to load on page view
+      // // ✅ useEffect to load on page view
       useEffect(() => {
         const userData = sessionStorage.getItem("userData");
     
         if (userData) {
           const parsed = JSON.parse(userData);
+          console.log(parsed.bootcamps);
     
           if (parsed.role === 'student') {
             const bootcampId = parsed.bootcamps;
@@ -69,8 +83,8 @@ export default function Section3() {
           router.push('/');
         }
     
-        return () => getDataDebounced.cancel(); // 🧹 cleanup debounce
-      }, [router.asPath]);
+        return () => getDataDebounced.cancel();
+      }, []);
 
       async function handleSubmit(e) {
         e.preventDefault();
@@ -102,17 +116,11 @@ export default function Section3() {
                 <p className={styles.big}>BATTLE BEGIN</p>
                 </div>
             </div>
-            <button className={styles.pulseBtn} onClick={() => setShow('flex')}>JOIN A BOOTCAMP</button>
+            {/* <button className={styles.pulseBtn} onClick={() => setShow('flex')}>JOIN A BOOTCAMP</button> */}
             <div className={styles.wrapper}>
-                {/* {task.map((item, idx) => (
-                    <div className={styles.box} key={idx} style={{ opacity: item.date == date ? '1' : '0.64' }}>
-                        <button className={styles.btn} disabled={item.date === date} style={{ cursor: item.date == date ? "pointer" : "context-menu" }}>{item.name}</button>
-                        <p className={styles.para}>COMPLETE TASK TO EARN A <span className={styles.red}>POINT</span></p>
-                    </div>
-                ))} */}
                 {[...Array(duration)].map((_, idx) => (
                   <div className={styles.box} key={idx}>
-                    <button className={styles.btn} disabled={today != `DAY ${String(idx + 1).padStart(2, '0')}`} style={{ cursor: today == `DAY ${String(idx + 1).padStart(2, '0')}` ? "pointer" : "context-menu" }}>TASK {String(idx + 1).padStart(2, '0')}</button>
+                    <button onClick={() => router.push('/quiz-questions')} className={styles.btn} disabled={today != `DAY ${String(idx + 1).padStart(2, '0')}`} style={{ cursor: today == `DAY ${String(idx + 1).padStart(2, '0')}` ? "pointer" : "context-menu" }}>TASK {String(idx + 1).padStart(2, '0')}</button>
                     <p className={styles.para}>COMPLETE DAY {String(idx + 1).padStart(2, '0')} TASK TO EARN A <span className={styles.red}>POINT</span></p>
                   </div>
                 ))}

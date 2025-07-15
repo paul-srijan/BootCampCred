@@ -6,6 +6,7 @@ import Section3 from "./section3";
 import Section4 from "../home/section3";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { setCookie, getCookie, deleteCookie } from 'cookies-next';
 
 export default function Section1() {
     const [parsedData, setParsedData] = useState({});
@@ -13,19 +14,15 @@ export default function Section1() {
     const router = useRouter();
 
     useEffect(() => {
-        const userData = sessionStorage.getItem("userData");
-
-        if (userData) {
-            const data = JSON.parse(userData);
-            if (data.role === 'student') {
-                setParsedData(data);
-                setBootcamps(data.bootcamps);
-            } else {
-                router.push('/');
-            }
-        } else {
-            router.push('/');
-        }
+        if(getCookie('userRole')) {
+        const role = getCookie('userRole');
+        
+        if (role != 'student') {
+          router.push('/');
+        } 
+      } else {
+        router.push('/');
+      }
     }, []);
 
     // function iterate over the array of bootcamp ids

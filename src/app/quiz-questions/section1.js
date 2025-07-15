@@ -5,24 +5,36 @@ import Section2 from "./section2";
 import Section3 from "./section3";
 import Section4 from "./section4";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { setCookie, getCookie, deleteCookie } from 'cookies-next';
 
 export default function Section1() {
+  const router = useRouter();
+  
     const [parsedData, setParsedData] = useState({});
 
     useEffect(() => {
-        const userData = sessionStorage.getItem("userData");
-
-        if (userData) {
-            const data = JSON.parse(userData);
-            if (data.role === 'student') {
-                setParsedData(data);
-            } else {
-                router.push('/');
-            }
-        } else {
-            router.push('/');
-        }
+        if(getCookie('userRole')) {
+        const role = getCookie('userRole');
+    
+        if (role != 'student') {
+          router.push('/');
+        } 
+      } else {
+        router.push('/');
+      }
     }, []);
+
+    useEffect(() => {
+    const storedData = sessionStorage.getItem('quizDetails');
+
+    if (storedData) {
+      // console.log(storedData);
+        const parsedData = JSON.parse(storedData);
+
+        console.log(parsedData);
+    }
+  }, []);
 
     return (
         <main className={styles.main}>

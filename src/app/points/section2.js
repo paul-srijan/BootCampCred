@@ -2,11 +2,6 @@ import styles from "../../styles/home/section2.module.css";
 
 export default function Section2() {
 
-    const logout = () => {
-        sessionStorage.removeItem("userData");
-        router.push('/');
-    };
-
     return (
         <main className={styles.main}>
             <div className={styles.text_wrap}>
@@ -15,7 +10,7 @@ export default function Section2() {
 
             <div className={styles.btn}>
                 <img src="/logout.png" alt="404" className={styles.user} />
-                <p className={styles.p} onClick={logout}>Logout</p>
+                <a href="/dashboard"><p className={styles.p}>End Task</p></a>
             </div>
         </main>
     );

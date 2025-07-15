@@ -1,6 +1,10 @@
+'use client';
+
 import styles from "../../styles/quiz-question/section2.module.css";
+import { useRouter } from "next/navigation";
 
 export default function Section2() {
+    const router = useRouter();
 
     const logout = () => {
         sessionStorage.removeItem("userData");
@@ -15,7 +19,7 @@ export default function Section2() {
 
             <div className={styles.btn}>
                 <img src="/logout.png" alt="404" className={styles.user} />
-                <p className={styles.p}>End Task</p>
+                <a href="/dashboard"><p className={styles.p}>End Task</p></a>
             </div>
         </main>
     );

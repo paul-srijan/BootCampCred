@@ -19,7 +19,7 @@ export default function Section1() {
     if (role === 'admin') {
       router.push('/admin/bootcamp');
     } else if (role === 'student') {
-      router.push('/contest');
+      router.push('/dashboard');
     }
     }
   }, []);

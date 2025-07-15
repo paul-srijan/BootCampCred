@@ -8,14 +8,29 @@ export default function Section4() {
     const [show, setShow] = useState('none');
     const [mobile, setMobile] = useState(false);
     const [email, setEmail] = useState('');
-    const [score, setScore] = useState('');
+    const [score, setScore] = useState(0);
 
-    const getPoints = async (email)=> {
+    useEffect(() => {
+        const storedData = sessionStorage.getItem('userData');
+    
+        if (storedData) {
+          // console.log(storedData);
+            const parsedData = JSON.parse(storedData);
+    
+            console.log(parsedData.user_id);
+            getPoints(parsedData.user_id);
+        }
+    }, []);
+
+    const getPoints = async (pt)=> {
+        console.log(pt);
+
         try {
-            const response = await fetch(``);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get?action=score&id=${pt}`);
             const result = await response.json();
 
-            setScore(result);
+            console.log(result);
+            setScore(Number(result) * 10);
             setDisplay('none');
             setShow('flex');
         } catch(error) {
@@ -27,7 +42,7 @@ export default function Section4() {
         e.preventDefault();
 
         try {
-            const response = await fetch(``, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get?`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -65,7 +80,7 @@ export default function Section4() {
                 <div className={styles.left}></div>
                 <div className={styles.right}>
     
-                <div className={styles.form1} style={{  display: `${display}` }}>
+                {/* <div className={styles.form1} style={{  display: `${display}` }}>
                 <p className={styles.p}>CLIMB THE <span className={styles.teal}>Leaderboard!</span></p>
                 <p className={styles.medium}>CHECK YOUR</p>
                 <div className={styles.bg}><div className={styles.text}>POINTS</div></div>
@@ -76,10 +91,10 @@ export default function Section4() {
                     <button className={styles.button} onClick={(e) => checkSubmit(e)}>CHECK NOW</button>
                 </form>
                 </div>
-                </div>
+                </div> */}
     
-                <div className={styles.display} style={{ display: `${show}` }}>
-                    <h1 className={`${styles.txt}`}>YOU HAVE <br/><br/><br/><span className={styles.span}>24</span><br/><br/> POINTS</h1>
+                <div className={styles.display}>
+                    <h1 className={`${styles.txt}`}>YOU HAVE<br/><br/><br/><span className={styles.span}>{score}</span><br/><br/> POINTS</h1>
                 </div>
     
                 </div>

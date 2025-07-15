@@ -1,11 +1,13 @@
 import styles from "../../styles/home/section2.module.css";
 import { useRouter } from "next/navigation";
+import { setCookie, getCookie, deleteCookie } from 'cookies-next';
 
 export default function Section2() {
     const router = useRouter();
 
     const logout = () => {
-        sessionStorage.removeItem("userData");
+        deleteCookie('userRole');
+        sessionStorage.removeItem('userData');
         router.push('/');
     };
 
